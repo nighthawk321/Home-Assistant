@@ -1,4 +1,10 @@
 # Home-Assistant
-My personnal set up for home assistant
+My current set up for my home automation is based on Hassio running on a Raspberry Pi 3b
 
-The hardware is a Raspberry Pi 3 using an eithernet connection
+Addition Hardware-
+2 Hue LED white lights
+Hue bridge
+Hue motoin sensor (currently off line)
+Google chromecast
+Google audiocast
+Google home assistant (using HA cloud)
