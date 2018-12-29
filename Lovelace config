@@ -1,0 +1,49 @@
+title: My Home
+views:
+  - badges: []
+    cards:
+      - type: entities
+        entities:
+          - calendar.holidays_in_united_kingdom
+          - calendar.galeforce1745googlemailcom
+        title: Calendar
+        show_header_toggle: false
+      - entities:
+          - entity: light.ceiling__light
+          - entity: light.bedside_light
+        title: My Room
+        type: entities
+      - type: entities
+        entities:
+          - entity: device_tracker.oneplus_3t
+          - entity: device_tracker.mike_strutts_iphone
+        theme: default
+        title: Who Is Home
+        show_header_toggle: false
+      - entity: media_player.bedroom_home
+        type: media-control
+      - entity: weather.dark_sky
+        type: weather-forecast
+      - entity: media_player.tv
+        type: media-control
+      - entity: media_player.kodi_libreeleclocal_2
+        type: media-control
+      - entity: media_player.chromecastaudio5183
+        type: media-control
+      - type: entities
+        entities:
+          - entity: sensor.current_ozone_level
+          - entity: binary_sensor.protection_window
+          - entity: sensor.current_uv_level
+          - entity: sensor.current_uv_index
+        title: UV Sensor
+        show_header_toggle: false
+      - type: entities
+        entities:
+          - entity: sensor.disk_use_percent_home
+          - entity: sensor.memory_free
+        theme: default
+        title: Device Info
+        show_header_toggle: false
+    path: default_view
+    title: Home
