@@ -14,3 +14,11 @@ Google audiocast
 Google home assistant (using HA cloud)
 
 Roku3
+
+
+Software/apps
+
+Ariela (pro version) Android app
+
+Owntracks via webhook and Home Assistant 
+  had issues getting this to work but found that I had done the web link wrong and found it best to copy and paste then email it to the phone and then copy and paste into the app.
