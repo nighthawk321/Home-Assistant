@@ -16,6 +16,8 @@ customize: !include customize.yaml
 introduction:
 # Enables the frontend
 frontend:
+  themes: !include themes.yaml
+
 # Enables configuration UI
 config:
 #
@@ -55,23 +57,40 @@ tts:
 # Example configuration.yaml entry to enable the cloud component
 cloud:
 config:
-# Example configuration.yaml entry
-weather:
-- platform: openweathermap
-api_key: "my api key"
 
-media_player:
-- platform: kodi
-host: 192.***.*.***
-zone:
-- name: Home
-latitude: "my Location"
-longitude: "my Location
-radius: 100
-icon: mdi:ash
+panel_iframe:
+  configurator:
+    title: Configurator
+    icon: mdi:wrench
+    url: http://192.168.1.174:3218
+
 # Example configuration.yaml entry
-device_tracker:
-- platform: bluetooth_tracker
+weather: 
+ - platform: darksky 
+   api_key: my api key
+   
+ device_tracker:
+  - platform: ping
+    interval_seconds: 30
+    consider_home: 1200
+    hosts:
+      OnePlus_3T: ip address  
+      MikeStrtsiPhone: ip address
+      
+owntracks:
+  max_gps_accuracy: 100
+
+sensor:
+  - platform: systemmonitor
+    resources:
+      - type: disk_use_percent
+        arg: /home
+      - type: memory_free
+ google:
+  client_id: ***************************.apps.googleusercontent.com
+  client_secret: web site provide   
+     
+
 # Example configuration.yaml entry
 sensor:
 - platform: systemmonitor
