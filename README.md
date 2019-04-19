@@ -9,8 +9,8 @@ Hue bridge
 
 Hue motion sensor (currently off line)
 
-Google chromecast
-
 Google audiocast
 
 Google home assistant (using HA cloud)
+
+Roku3
