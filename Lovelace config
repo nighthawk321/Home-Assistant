@@ -1,49 +1,85 @@
-title: My Home
+title: Home
 views:
-  - badges: []
+  - badges: null
     cards:
-      - type: entities
-        entities:
-          - calendar.holidays_in_united_kingdom
-          - calendar.galeforce1745googlemailcom
-        title: Calendar
-        show_header_toggle: false
       - entities:
-          - entity: light.ceiling__light
           - entity: light.bedside_light
-        title: My Room
-        type: entities
-      - type: entities
-        entities:
-          - entity: device_tracker.oneplus_3t
-          - entity: device_tracker.mike_strutts_iphone
-        theme: default
-        title: Who Is Home
+          - entity: light.ceiling_light
         show_header_toggle: false
+        title: Bedroom lights
+        type: entities
+      - entity: weather.dark_sky
+        name: Weather
+        type: weather-forecast
+      - entities:
+          - entity: calendar.galeforce1745_googlemail_com
+          - entity: calendar.holidays_in_united_kingdom
+        show_header_toggle: false
+        title: Calender
+        type: entities
+      - entity: media_player.kodi_libreelec_local
+        type: media-control
+      - entities:
+          - entity: device_tracker.ash_oneplus3t
+          - entity: device_tracker.mikestrtsiphone
+        show_header_toggle: false
+        title: Who's home
+        type: entities
+      - entity: media_player.music_speaker
+        type: media-control
       - entity: media_player.bedroom_home
         type: media-control
-      - entity: weather.dark_sky
-        type: weather-forecast
-      - entity: media_player.tv
+      - entity: media_player.roku_1ws3aj009179
         type: media-control
-      - entity: media_player.kodi_libreeleclocal_2
-        type: media-control
-      - entity: media_player.chromecastaudio5183
-        type: media-control
-      - type: entities
-        entities:
-          - entity: sensor.current_ozone_level
-          - entity: binary_sensor.protection_window
-          - entity: sensor.current_uv_level
-          - entity: sensor.current_uv_index
-        title: UV Sensor
-        show_header_toggle: false
-      - type: entities
-        entities:
-          - entity: sensor.disk_use_percent_home
-          - entity: sensor.memory_free
-        theme: default
-        title: Device Info
-        show_header_toggle: false
     path: default_view
     title: Home
+  - badges: []
+    cards:
+      - default_zoom: 16
+        entities:
+          - entity: device_tracker.ash_oneplus3t
+        title: Map
+        type: map
+    panel: true
+    theme: Dark - Green
+    title: Map
+  - badges: []
+    cards:
+      - entities:
+          - entity: binary_sensor.protection_window
+          - entity: sensor.current_ozone_level
+          - entity: sensor.current_uv_index
+          - entity: sensor.current_ozone_level
+          - entity: sensor.current_uv_level
+          - entity: sensor.max_uv_index
+        show_header_toggle: false
+        title: Open UV
+        type: entities
+      - entities:
+          - entity: sensor.skin_type_1_safe_exposure_time
+          - entity: sensor.skin_type_2_safe_exposure_time
+          - entity: sensor.skin_type_3_safe_exposure_time
+          - entity: sensor.skin_type_4_safe_exposure_time
+          - entity: sensor.skin_type_5_safe_exposure_time
+          - entity: sensor.skin_type_6_safe_exposure_time
+        show_header_toggle: false
+        title: Exposure Level
+        type: entities
+    title: Outside
+  - badges: []
+    cards:
+      - detail: 2
+        entity: sensor.memory_free
+        graph: line
+        name: Device Memory
+        type: sensor
+      - entity: sensor.disk_use_percent_home
+        graph: line
+        name: Disk Use
+        type: sensor
+      - entities:
+          - entity: sensor.oneplus_3t_battery_sensor
+          - entity: sensor.oneplus_3t_available_status
+        title: Ash Phone
+        type: glance
+    title: Device Moniter
