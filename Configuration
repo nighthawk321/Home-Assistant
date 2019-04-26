@@ -12,8 +12,7 @@ unit_system: metric
 time_zone: Europe/London
 # Customization file
 customize: !include customize.yaml
-# Show links to resources in log and frontend
-introduction:
+
 # Enables the frontend
 frontend:
   themes: !include themes.yaml
