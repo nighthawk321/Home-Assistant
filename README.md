@@ -7,7 +7,7 @@ Current Hardware-
 
 Hue bridge
 
-Hue motion sensor (currently off line)
+Hue motion sensor 
 
 Google audiocast
 
@@ -15,10 +15,12 @@ Google home assistant (using HA cloud)
 
 Roku3
 
+Raspberry 3B running Kodi/libreelec
 
 Software/apps
 
 Ariela (pro version) Android app
+Yatse for controlling kodi
 
 Owntracks via webhook and Home Assistant 
   had issues getting this to work but found that I had done the web link wrong and found it best to copy and paste then email it to the phone and then copy and paste into the app.
