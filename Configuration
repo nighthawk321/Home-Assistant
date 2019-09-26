@@ -52,22 +52,37 @@ sensor:
 - platform: yr
 # Text to speech
 tts:
-- platform: google
+- platform: google_translate
+  service_name: google_say
+  
 # Example configuration.yaml entry to enable the cloud component
 cloud:
-config:
 
 panel_iframe:
   configurator:
     title: Configurator
     icon: mdi:wrench
-    url: http://192.168.1.174:3218
+    url: http://***********
+
+binary_sensor:
+  - platform: meteoalarm
+    country: 'my country'
+    province: 'county'
+
+tuya:
+  username: my email
+  password: my password
+  country_code: 44
+
 
 # Example configuration.yaml entry
 weather: 
  - platform: darksky 
    api_key: my api key
-   
+
+hacs:
+  token: my private token
+
  device_tracker:
   - platform: ping
     interval_seconds: 30
@@ -78,19 +93,37 @@ weather:
       
 owntracks:
   max_gps_accuracy: 100
-
+  
+# add all sensors here to prevent duplicate error configuration.yaml entry
 sensor:
   - platform: systemmonitor
     resources:
       - type: disk_use_percent
         arg: /home
-      - type: memory_free
+      - type: memory_free 
+  - platform: mqtt
+    name: Bridge state
+    state_topic: "zigbee2m"
+    
  google:
   client_id: ***************************.apps.googleusercontent.com
   client_secret: web site provide   
      
+mqtt:
+  broker: core-mosquitto # This will have to be your mqtt broker, Mosquitto addon is recommended.
+  discovery: true
 
-# Example configuration.yaml entry
+input_boolean:
+  zigbee_permit_join:
+    name: Allow devices to join
+    initial: off
+    icon: mdi:cellphone-wireless
+    
+timer:
+  zigbee_permit_join:
+    name: Time remaining
+    duration: 600 # Updated this to the number of seconds you wish
+    
 sensor:
 - platform: systemmonitor
 resources:
