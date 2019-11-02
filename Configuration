@@ -95,6 +95,7 @@ owntracks:
   max_gps_accuracy: 100
   
 # add all sensors here to prevent duplicate error configuration.yaml entry
+# tokens to be removed and kept else where
 sensor:
   - platform: systemmonitor
     resources:
@@ -104,6 +105,11 @@ sensor:
   - platform: mqtt
     name: Bridge state
     state_topic: "zigbee2m"
+  platform: waqi
+    token: AQICN_API_TOKEN
+    locations:
+       - oxford
+       - malmesbury
     
  google:
   client_id: ***************************.apps.googleusercontent.com
