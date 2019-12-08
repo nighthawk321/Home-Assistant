@@ -109,7 +109,6 @@ sensor:
     token: AQICN_API_TOKEN
     locations:
        - oxford
-       - malmesbury
     
  google:
   client_id: ***************************.apps.googleusercontent.com
