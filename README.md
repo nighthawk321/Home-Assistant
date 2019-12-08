@@ -18,8 +18,7 @@ Roku3
 Raspberry 3B running Kodi/libreelec
 
 Software/apps
-
-Ariela (pro version) Android app
+Offical Home assistant app for Android 
 Yatse for controlling kodi
 
 Owntracks via webhook and Home Assistant 
