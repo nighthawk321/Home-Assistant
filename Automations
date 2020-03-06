@@ -12,18 +12,17 @@
   action:
     service: openuv.update_data
   id: c995621ba5094f52af8de95a0272a4ff
-- alias: Set theme at startup
+- id: 612a1b32532f43f2b369a6acd480417e
+  alias: Set theme at startup
   trigger:
+  - event: start
     platform: homeassistant
-    event: start
   action:
+  - data:
+      name: summer_breeze
     service: frontend.set_theme
-    data:
-      name: Dark - Green
-  id: 612a1b32532f43f2b369a6acd480417e
 - id: enable_zigbee_join
   alias: Enable Zigbee joining
-  hide_entity: true
   trigger:
     platform: state
     entity_id: input_boolean.zigbee_permit_join
@@ -50,10 +49,8 @@
   - data:
       entity_id: timer.zigbee_permit_join
     service: timer.cancel
-  hide_entity: true
 - id: disable_zigbee_join_timer
   alias: Disable Zigbee joining by timer
-  hide_entity: true
   trigger:
   - platform: event
     event_type: timer.finished
@@ -67,18 +64,6 @@
   - service: input_boolean.turn_off
     data:
       entity_id: input_boolean.zigbee_permit_join
-- id: '1574092316393'
-  alias: open curtain at sunset
-  description: ''
-  trigger:
-  - event: sunset
-    offset: -0:15
-    platform: sun
-  condition: []
-  action:
-  - data:
-      entity_id: all
-    service: cover.open_cover
 - id: '1574456467469'
   alias: Turn the ceiling light on when motion is detected
   description: ''
@@ -86,10 +71,46 @@
   - device_id: ad1c7f53a4bd40409593ce7b0a8c17fe
     domain: binary_sensor
     entity_id: binary_sensor.0x001788010213b0e8_occupancy
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 0
     platform: device
     type: motion
   condition: []
   action:
   - device_id: cb6dd309898847668823966b48c1938b
     domain: light
-    entity_id:
+    entity_id: light.0x001788010244e3bd_light
+    type: turn_on
+- id: '1582809324125'
+  alias: Close the Curtain
+  description: Closes the curtain at sunset
+  trigger:
+  - event: sunset
+    platform: sun
+  condition: []
+  action:
+  - data:
+      brightness: 2
+    entity_id: light.curtain
+    service: light.toggle
+- id: '1583268889911'
+  alias: Turn Off Ceiling Light
+  description: Turns the light off after a preset time
+  trigger:
+  - device_id: cb6dd309898847668823966b48c1938b
+    domain: light
+    entity_id: light.0x001788010244e3bd_light
+    for:
+      hours: 0
+      minutes: 30
+      seconds: 0
+    platform: device
+    type: turned_on
+  condition: []
+  action:
+  - device_id: cb6dd309898847668823966b48c1938b
+    domain: light
+    entity_id: light.0x001788010244e3bd_light
+    type: turn_off
