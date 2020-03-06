@@ -47,9 +47,19 @@ logbook:
 map:
 # Track the sun
 sun:
-# Weather prediction
-sensor:
-- platform: yr
+
+#mobile app
+mobile_app
+
+#Disaster alert
+gdacs:
+  categories:
+     -Drought
+     -Flood
+  radius: 250
+  latitude: off my home
+  longitude: same again
+
 # Text to speech
 tts:
 - platform: google_translate
@@ -64,35 +74,15 @@ panel_iframe:
     icon: mdi:wrench
     url: http://***********
 
-binary_sensor:
-  - platform: meteoalarm
-    country: 'my country'
-    province: 'county'
-
-tuya:
-  username: my email
-  password: my password
-  country_code: 44
-
 
 # Example configuration.yaml entry
 weather: 
  - platform: darksky 
-   api_key: my api key
+   api_key: !secret darksky
 
 hacs:
   token: my private token
 
- device_tracker:
-  - platform: ping
-    interval_seconds: 30
-    consider_home: 1200
-    hosts:
-      OnePlus_3T: ip address  
-      MikeStrtsiPhone: ip address
-      
-owntracks:
-  max_gps_accuracy: 100
   
 # add all sensors here to prevent duplicate error configuration.yaml entry
 # tokens to be removed and kept else where
@@ -108,11 +98,7 @@ sensor:
   platform: waqi
     token: AQICN_API_TOKEN
     locations:
-       - oxford
-    
- google:
-  client_id: ***************************.apps.googleusercontent.com
-  client_secret: web site provide   
+       - oxford  
      
 mqtt:
   broker: core-mosquitto # This will have to be your mqtt broker, Mosquitto addon is recommended.
