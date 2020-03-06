@@ -3,23 +3,22 @@ My current set up for my home automation is based on Hassio running on a Raspber
 
 Current Hardware-
 
+Echo dot 
+
+Zemissmart curtan rail converted to Tasmoto (OTA)
+
 2 Hue LED white lights
 
-Hue bridge
-
 Hue motion sensor 
-
-Google audiocast
-
-Google home assistant (using HA cloud)
 
 Roku3
 
 Raspberry 3B running Kodi/libreelec
 
+Zigbee2mqtt added to set up, works fine
+
 Software/apps
 Offical Home assistant app for Android 
 Yatse for controlling kodi
 
-Owntracks via webhook and Home Assistant 
-  had issues getting this to work but found that I had done the web link wrong and found it best to copy and paste then email it to the phone and then copy and paste into the app.
+Tracking is now done through the android app although I am now carriying a Ubuntu touch phone which has a home assistant but it appears to be buggy and out dated and not mantained. Seriously though it still works but needs updating badly!
