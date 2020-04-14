@@ -49,21 +49,9 @@ map:
 sun:
 
 #mobile app
-mobile_app
-
-#Disaster alert
-gdacs:
-  categories:
-     -Drought
-     -Flood
-  radius: 250
-  latitude: off my home
-  longitude: same again
 
 # Text to speech
 tts:
-- platform: google_translate
-  service_name: google_say
   
 # Example configuration.yaml entry to enable the cloud component
 cloud:
