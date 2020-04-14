@@ -2,25 +2,56 @@ cch:
   chevrons: true
   redirect: false
   warning: false
-resources:
-  - type: module
-    url: /community_plugin/compact-custom-header/compact-custom-header.js
-  - type: module
-    url: /community_plugin/weather-card/weather-card.js
-  - type: module
-    url: /community_plugin/mini-media-player/mini-media-player-bundle.js
-  - type: js
-    url: /community_plugin/calendar-card/calendar-card.js
+custom_header:
+  compact_mode: true
+  voice_hide: true
 title: Home
 views:
   - badges: []
     cards:
+      - entity: weather.dark_sky
+        name: Darksky
+        type: 'custom:weather-card'
       - entities:
-          - entity: device_tracker.mikestrtsiphone
-          - entity: device_tracker.ashley_ashphone
-        show_header_toggle: false
-        title: Who's home
+          - entity: sensor.house_hold
+          - entity: sensor.recycle
+        type: glance
+      - entities:
+          - entity: sensor.worldwide_coronavirus_confirmed
+          - entity: sensor.worldwide_coronavirus_current
+          - entity: sensor.worldwide_coronavirus_deaths
+          - entity: sensor.worldwide_coronavirus_recovered
+        title: World Coronavirus
+        type: glance
+      - entities:
+          - entity: sensor.united_kingdom_coronavirus_confirmed
+          - entity: sensor.united_kingdom_coronavirus_current
+          - entity: sensor.united_kingdom_coronavirus_deaths
+          - entity: sensor.united_kingdom_coronavirus_recovered
+        title: UK dreaded Lurkey
+        type: glance
+      - entities:
+          - sensor.discogs_collection
+          - sensor.discogs_wantlist
         type: entities
+    icon: ''
+    path: default_view
+    title: Home
+  - badges: []
+    cards:
+      - entity: light.0xd0cf5efffec2b83c_light
+        icon: 'mdi:lamp'
+        name: Bedside Light
+        theme: Backend-selected
+        type: light
+      - entity: light.0xd0cf5efffec63b45_light
+        icon: 'mdi:lamp'
+        type: light
+      - entities:
+          - entity: binary_sensor.0x001788010213b0e8_occupancy
+          - entity: sensor.0x001788010213b0e8_battery
+          - entity: sensor.0x001788010213b0e8_temperature
+        type: glance
       - artwork: cover
         entity: media_player.kodi_libreelec_local
         hide:
@@ -28,80 +59,64 @@ views:
           source: false
           volume: true
         type: 'custom:mini-media-player'
-      - entity: media_player.music_speaker
-        type: 'custom:mini-media-player'
-      - entity: weather.dark_sky
-        name: Darksky
-        type: 'custom:weather-card'
-      - entities:
-          - calendar.galeforce1745_googlemail_com
-        progressBar: true
-        title: My Calendar
-        type: 'custom:calendar-card'
-    icon: ''
-    path: default_view
-    title: Home
-  - badges: []
-    cards:
-      - entity: light.0x001788010244e411_light
-        name: Bedside Light
-        theme: Dark - Green
+      - entity: light.curtain
         type: light
-      - entity: light.0x001788010244e3bd_light
-        name: Ceiling Light
-        theme: Dark - Green
-        type: light
-      - entities:
-          - entity: cover.10481015a4cf12acef0e
-        show_header_toggle: false
-        theme: Dark - Green
-        title: Curtain
-        type: entities
-      - entities:
-          - entity: binary_sensor.0x001788010213b0e8_occupancy
-          - entity: sensor.0x001788010213b0e8_battery
-          - entity: sensor.0x001788010213b0e8_temperature
-        type: glance
+      - entity: media_player.volumio_volumio_local
+        type: media-control
+      - entity: media_player.roku_1ws3aj009179
+        type: media-control
     path: my-room
     title: My Room
   - badges: []
     cards:
       - entities:
+          - binary_sensor.0x00158d0002427402_occupancy
+          - sensor.0x00158d0002427402_linkquality
+          - sensor.0x00158d0002427402_battery
+        title: 'Landing '
+        type: glance
+      - entities:
           - entity: binary_sensor.0x00158d000315f0ea_occupancy
+          - entity: sensor.0x00158d000315f0ea_linkquality
           - entity: sensor.0x00158d000315f0ea_battery
-          - entity: sensor.0x00158d000315f0ea_illuminance
+        title: Conor's Room
+        type: glance
+    path: Upstairs
+    title: Upstairs
+  - badges: []
+    cards:
+      - entities:
+          - switch.tumble_dryer
+          - binary_sensor.tumble_dryer_button1
+          - sensor.tumble_dryer_energy_apparentpower
+          - sensor.tumble_dryer_energy_current
+          - sensor.tumble_dryer_energy_factor
+          - sensor.tumble_dryer_energy_power
+          - sensor.tumble_dryer_energy_reactivepower
+          - sensor.tumble_dryer_energy_today
+          - sensor.tumble_dryer_energy_total
+          - sensor.tumble_dryer_energy_totalstarttime
+          - sensor.tumble_dryer_energy_voltage
+          - sensor.tumble_dryer_energy_yesterday
+          - sensor.tumble_dryer_status
         show_header_toggle: false
-        title: Motion
         type: entities
-      - entity: sensor.0x00158d000315f0ea_linkquality
-        graph: line
-        name: Linko
-        type: sensor
-    path: conor-room
-    title: Conor Room
-  - badges: []
-    cards:
-      - entity: media_player.bedroom_home
-        type: media-control
-      - artwork: cover
-        entity: media_player.roku_1ws3aj009179
-        hide:
-          power_state: false
-          source: false
-          volume: false
-        type: 'custom:mini-media-player'
-    panel: false
-    title: Media
-  - badges: []
-    cards:
-      - default_zoom: 16
-        entities:
-          - entity: person.ashley
-        title: Map
-        type: map
-    panel: true
-    theme: Dark - Green
-    title: Map
+      - entities:
+          - switch.washing_machine
+          - sensor.washing_machine_energy_apparentpower
+          - sensor.washing_machine_energy_current
+          - sensor.washing_machine_energy_factor
+          - sensor.washing_machine_energy_power
+          - sensor.washing_machine_energy_reactivepower
+          - sensor.washing_machine_energy_today
+          - sensor.washing_machine_energy_total
+          - sensor.washing_machine_energy_totalstarttime
+          - sensor.washing_machine_energy_voltage
+          - sensor.washing_machine_energy_yesterday
+          - sensor.washing_machine_status
+        type: entities
+    path: utility
+    title: Utility
   - badges: []
     cards:
       - entities:
@@ -125,32 +140,70 @@ views:
         title: Exposure Level
         type: entities
       - entities:
-          - entity: binary_sensor.meteoalarm
-        theme: Dark - Green
-        title: Weather warning
+          - entity: sensor.waqi_oxford_st_ebbes_united_kingdom
+        title: Air quality
         type: glance
     title: Outside
   - badges: []
     cards:
-      - detail: 2
-        entity: sensor.memory_free
-        graph: line
-        name: Device Memory
-        type: sensor
       - entity: sensor.disk_use_percent_home
         graph: line
         name: Disk Use
         type: sensor
+      - entities:
+          - entity: sensor.dcp_j4120dw_black_toner_remaining
+          - entity: sensor.dcp_j4120dw_cyan_toner_remaining
+          - entity: sensor.dcp_j4120dw_magenta_toner_remaining
+          - entity: sensor.dcp_j4120dw_yellow_toner_remaining
+          - entity: sensor.dcp_j4120dw_status
+        type: entities
+      - entities:
+          - entity: sensor.tv_energy_current
+          - entity: sensor.tv_energy_total
+          - entity: sensor.tv_energy_today
+        type: entities
+      - entity: sensor.memory_free
+        max: 100
+        min: 0
+        theme: default
+        type: gauge
     title: Device Moniter
   - badges: []
     cards:
       - entity: sensor.hacs
+        theme: Backend-selected
         type: sensor
       - entities:
           - entity: input_boolean.zigbee_permit_join
           - entity: timer.zigbee_permit_join
           - entity: sensor.bridge_state
         show_header_toggle: false
+        theme: Backend-selected
         title: Zigbee
         type: entities
+      - entities:
+          - entity: automation.turn_the_ceiling_light_on_when_motion_is_detected
+        show_header_toggle: false
+        title: Automation Control
+        type: entities
+      - entity: switch.tv
+        hold_action:
+          action: more-info
+        show_icon: true
+        show_name: true
+        tap_action:
+          action: toggle
+        type: entity-button
+      - entities:
+          - sensor.curtain_status
+        type: entities
+      - entities:
+          - entity: switch.ashley_s_echo_dot_do_not_disturb_switch
+          - entity: sensor.ashley_s_echo_dot_next_alarm
+          - entity: sensor.ashley_s_echo_dot_next_reminder
+          - entity: sensor.ashley_s_echo_dot_next_timer
+        show_header_toggle: false
+        type: entities 
+      - entity: media_player.ashley_s_echo_dot
+        type: media-control
     title: test
