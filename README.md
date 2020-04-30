@@ -1,5 +1,5 @@
 # Home-Assistant
-My current set up for my home automation is based on Hassio running on a Raspberry Pi 4 2gb
+My current set up for my home automation is based on Hassio running on a Raspberry Pi4 2gb
 
 Current Hardware-
 
@@ -14,7 +14,7 @@ Aqua motion sensors x2
 
 Roku3
 
-Raspberry 4B running Kodi/libreelec
+Raspberry 3B running Kodi/libreelec
 
 Zigbee2mqtt added to set up, works fine
 
