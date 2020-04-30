@@ -10,10 +10,11 @@ Zemissmart curtan rail converted to Tasmoto (OTA)
 2 Ikea light bulb
 
 Hue motion sensor 
+Aqua motion sensors x2
 
 Roku3
 
-Raspberry 3B running Kodi/libreelec
+Raspberry 4B running Kodi/libreelec
 
 Zigbee2mqtt added to set up, works fine
 
