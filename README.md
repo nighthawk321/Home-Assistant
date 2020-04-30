@@ -9,10 +9,12 @@ Zemissmart curtan rail converted to Tasmoto (OTA)
 
 2 Ikea light bulb
 
-Hue motion sensor 
+Hue motion sensor
+
 Aqua motion sensors x2
 
 2 Teckin SP23 plugs, Tasmota converted
+
 1 Aoycocr U3S plugs, Tasmota converted
 
 Roku3
