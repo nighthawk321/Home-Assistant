@@ -12,6 +12,9 @@ Zemissmart curtan rail converted to Tasmoto (OTA)
 Hue motion sensor 
 Aqua motion sensors x2
 
+2 Teckin SP23 plugs, Tasmota converted
+1 Aoycocr U3S plugs, Tasmota converted
+
 Roku3
 
 Raspberry 3B running Kodi/libreelec
