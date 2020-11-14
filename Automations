@@ -1,17 +1,3 @@
-- alias: Update OpenUV every 45 minutes during the daytime
-  trigger:
-    platform: time_pattern
-    minutes: /45
-  condition:
-    condition: and
-    conditions:
-    - condition: sun
-      after: sunrise
-    - condition: sun
-      before: sunset
-  action:
-    service: openuv.update_data
-  id: c995621ba5094f52af8de95a0272a4ff
 - id: 612a1b32532f43f2b369a6acd480417e
   alias: Set theme at startup
   trigger:
@@ -83,34 +69,36 @@
     domain: light
     entity_id: light.0x001788010244e3bd_light
     type: turn_on
-- id: '1582809324125'
+
+- id: '1585303491200'
   alias: Close the Curtain
-  description: Closes the curtain at sunset
+  description: Close the curtain at sunset
   trigger:
   - event: sunset
+    offset: -00:15:00
     platform: sun
   condition: []
   action:
-  - data:
-      brightness: 2
-    entity_id: light.curtain
-    service: light.toggle
-- id: '1583268889911'
-  alias: Turn Off Ceiling Light
-  description: Turns the light off after a preset time
+  - service: light.turn_on
+    data:
+      entity_id: light.curtain
+      brightness: 1
+      
+   - id: '1586353189988'
+  alias: Washing as finished
+  description: washing is done
   trigger:
-  - device_id: cb6dd309898847668823966b48c1938b
-    domain: light
-    entity_id: light.0x001788010244e3bd_light
-    for:
-      hours: 0
-      minutes: 30
-      seconds: 0
+  - below: 0.5
+    device_id: 58955ada56ff4d8eacd5a7a158251169
+    domain: sensor
+    entity_id: sensor.washing_machine_energy_power
     platform: device
-    type: turned_on
+    type: power
   condition: []
   action:
-  - device_id: cb6dd309898847668823966b48c1938b
-    domain: light
-    entity_id: light.0x001788010244e3bd_light
-    type: turn_off
+  - data:
+      data:
+        type: tts
+      message: Mylord, your son would like to be removed from the washing machine
+      target: media_player.ashleys echo dot
+    service: notify.alexa_media_ashley_s_echo_dot   
