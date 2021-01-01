@@ -2,55 +2,41 @@ cch:
   chevrons: true
   redirect: false
   warning: false
-custom_header:
-  compact_mode: true
-  voice_hide: true
 title: Home
 views:
   - badges: []
     cards:
-      - entity: weather.dark_sky
-        name: Darksky
-        type: 'custom:weather-card'
       - entities:
-          - entity: sensor.house_hold
-          - entity: sensor.recycle
-        type: glance
-      - entities:
-          - entity: sensor.worldwide_coronavirus_confirmed
-          - entity: sensor.worldwide_coronavirus_current
-          - entity: sensor.worldwide_coronavirus_deaths
-          - entity: sensor.worldwide_coronavirus_recovered
-        title: World Coronavirus
-        type: glance
-      - entities:
-          - entity: sensor.united_kingdom_coronavirus_confirmed
-          - entity: sensor.united_kingdom_coronavirus_current
-          - entity: sensor.united_kingdom_coronavirus_deaths
-          - entity: sensor.united_kingdom_coronavirus_recovered
-        title: UK dreaded Lurkey
-        type: glance
-      - entities:
-          - sensor.discogs_collection
-          - sensor.discogs_wantlist
+          - sensor.house_hold
+          - sensor.recycle
         type: entities
-    icon: ''
+      - aspect_ratio: 0%
+        camera_view: live
+        entity: camera.front_camera
+        type: picture-entity
+      - type: entity
+        entity: binary_sensor.lumi_lumi_sensor_magnet_aq2_on_off
+        icon: 'mdi:key'
+        name: Front Garage Door
+      - type: entity
+        entity: binary_sensor.lumi_lumi_sensor_magnet_aq2_7c185c04_on_off
+        name: Shed
+        icon: 'hass:key'
+      - type: weather-forecast
+        entity: weather.openweathermap
+      - entities:
+          - entity: sensor.front_camera_sd_used
+          - entity: binary_sensor.front_camera_online
+          - entity: binary_sensor.front_camera_motion_detected
+        type: entities
+    icon: 'mdi:castle'
     path: default_view
     title: Home
   - badges: []
     cards:
-      - entity: light.0xd0cf5efffec2b83c_light
-        icon: 'mdi:lamp'
-        name: Bedside Light
-        theme: Backend-selected
-        type: light
-      - entity: light.0xd0cf5efffec63b45_light
-        icon: 'mdi:lamp'
-        type: light
       - entities:
           - entity: binary_sensor.0x001788010213b0e8_occupancy
           - entity: sensor.0x001788010213b0e8_battery
-          - entity: sensor.0x001788010213b0e8_temperature
         type: glance
       - artwork: cover
         entity: media_player.kodi_libreelec_local
@@ -59,12 +45,36 @@ views:
           source: false
           volume: true
         type: 'custom:mini-media-player'
-      - entity: light.curtain
-        type: light
-      - entity: media_player.volumio_volumio_local
-        type: media-control
       - entity: media_player.roku_1ws3aj009179
         type: media-control
+      - entity: switch.tv
+        hold_action:
+          action: more-info
+        show_icon: true
+        show_name: true
+        tap_action:
+          action: toggle
+        type: entity-button
+      - type: grid
+        cards:
+          - type: light
+            entity: light.0xd0cf5efffec2b83c_light
+          - type: light
+            entity: light.0xd0cf5efffec63b45_light
+          - type: light
+            entity: light.curtain
+      - entity: climate.my_heater_climate
+        type: thermostat
+      - type: media-control
+        entity: media_player.spotify_ashleycrue
+      - type: media-control
+        entity: media_player.bedroom
+      - entities:
+          - sensor.discogs_collection
+          - sensor.discogs_wantlist
+        title: Discogs
+        type: entities
+    icon: 'mdi:cake'
     path: my-room
     title: My Room
   - badges: []
@@ -79,71 +89,51 @@ views:
           - entity: binary_sensor.0x00158d000315f0ea_occupancy
           - entity: sensor.0x00158d000315f0ea_linkquality
           - entity: sensor.0x00158d000315f0ea_battery
-        title: Conor's Room
+        title: Hallway
         type: glance
+    icon: 'mdi:stairs'
     path: Upstairs
     title: Upstairs
   - badges: []
     cards:
       - entities:
-          - switch.tumble_dryer
-          - binary_sensor.tumble_dryer_button1
-          - sensor.tumble_dryer_energy_apparentpower
-          - sensor.tumble_dryer_energy_current
-          - sensor.tumble_dryer_energy_factor
-          - sensor.tumble_dryer_energy_power
-          - sensor.tumble_dryer_energy_reactivepower
-          - sensor.tumble_dryer_energy_today
-          - sensor.tumble_dryer_energy_total
-          - sensor.tumble_dryer_energy_totalstarttime
-          - sensor.tumble_dryer_energy_voltage
-          - sensor.tumble_dryer_energy_yesterday
-          - sensor.tumble_dryer_status
+          - entity: switch.tumble_dryer
+          - entity: sensor.tumble_dryer_energy_current
+          - entity: sensor.tumble_dryer_energy_power
+          - entity: sensor.tumble_dryer_energy_today
+          - entity: sensor.tumble_dryer_energy_yesterday
+          - entity: sensor.tumble_dryer_status
         show_header_toggle: false
         type: entities
       - entities:
-          - switch.washing_machine
-          - sensor.washing_machine_energy_apparentpower
-          - sensor.washing_machine_energy_current
-          - sensor.washing_machine_energy_factor
-          - sensor.washing_machine_energy_power
-          - sensor.washing_machine_energy_reactivepower
-          - sensor.washing_machine_energy_today
-          - sensor.washing_machine_energy_total
-          - sensor.washing_machine_energy_totalstarttime
-          - sensor.washing_machine_energy_voltage
-          - sensor.washing_machine_energy_yesterday
-          - sensor.washing_machine_status
+          - entity: switch.washing_machine
+          - entity: sensor.washing_machine_energy_current
+          - entity: sensor.washing_machine_energy_power
+          - entity: sensor.washing_machine_energy_today
+          - entity: sensor.washing_machine_energy_yesterday
+          - entity: sensor.washing_machine_status
         type: entities
+      - entities:
+          - entity: switch.big_freezer
+          - entity: sensor.big_freezer_energy_current
+          - entity: sensor.big_freezer_energy_power
+          - entity: sensor.big_freezer_energy_today
+          - entity: sensor.big_freezer_energy_total
+          - entity: sensor.big_freezer_energy_yesterday
+          - entity: sensor.big_freezer_status
+        type: entities
+      - entities:
+          - entity: sensor.little_freezer_energy_current
+          - entity: sensor.little_freezer_energy_power
+          - entity: sensor.little_freezer_energy_today
+          - entity: sensor.little_freezer_energy_total
+          - entity: sensor.little_freezer_energy_totalstarttime
+          - entity: sensor.little_freezer_energy_yesterday
+          - entity: sensor.little_freezer_status
+        type: entities
+    icon: 'mdi:door'
     path: utility
     title: Utility
-  - badges: []
-    cards:
-      - entities:
-          - entity: binary_sensor.protection_window
-          - entity: sensor.current_ozone_level
-          - entity: sensor.current_uv_index
-          - entity: sensor.current_ozone_level
-          - entity: sensor.current_uv_level
-          - entity: sensor.max_uv_index
-        show_header_toggle: false
-        title: Open UV
-        type: entities
-      - entities:
-          - entity: sensor.skin_type_1_safe_exposure_time
-          - entity: sensor.skin_type_2_safe_exposure_time
-          - entity: sensor.skin_type_3_safe_exposure_time
-          - entity: sensor.skin_type_4_safe_exposure_time
-          - entity: sensor.skin_type_5_safe_exposure_time
-          - entity: sensor.skin_type_6_safe_exposure_time
-        show_header_toggle: false
-        title: Exposure Level
-        type: entities
-      - entities:
-          - entity: sensor.waqi_oxford_st_ebbes_united_kingdom
-        title: Air quality
-        type: glance
-    title: Outside
   - badges: []
     cards:
       - entity: sensor.disk_use_percent_home
@@ -151,28 +141,80 @@ views:
         name: Disk Use
         type: sensor
       - entities:
-          - entity: sensor.dcp_j4120dw_black_toner_remaining
-          - entity: sensor.dcp_j4120dw_cyan_toner_remaining
-          - entity: sensor.dcp_j4120dw_magenta_toner_remaining
-          - entity: sensor.dcp_j4120dw_yellow_toner_remaining
-          - entity: sensor.dcp_j4120dw_status
-        type: entities
-      - entities:
           - entity: sensor.tv_energy_current
           - entity: sensor.tv_energy_total
           - entity: sensor.tv_energy_today
         type: entities
-      - entity: sensor.memory_free
-        max: 100
-        min: 0
-        theme: default
-        type: gauge
+      - entities:
+          - entity: sensor.cpu_speed
+        hours_to_show: 24
+        refresh_interval: 1
+        title: CPU Speed
+        type: history-graph
+      - entities:
+          - sensor.memory_free
+        hours_to_show: 24
+        refresh_interval: 0
+        title: Memory Free
+        type: history-graph
+      - cards:
+          - entity: sensor.speedtest_download
+            max: 100
+            min: 0
+            severity:
+              green: 4
+              red: 0
+              yellow: 0
+            type: gauge
+          - entity: sensor.speedtest_upload
+            max: 100
+            min: 0
+            type: gauge
+          - entity: sensor.speedtest_ping
+            max: 100
+            min: 0
+            severity:
+              green: 0
+              red: 0
+              yellow: 0
+            type: gauge
+        type: horizontal-stack
+    icon: 'mdi:monitor'
     title: Device Moniter
   - badges: []
     cards:
       - entity: sensor.hacs
         theme: Backend-selected
         type: sensor
+      - entities:
+          - sensor.curtain_status
+        type: entities
+      - entities:
+          - entity: binary_sensor.0x00158d00034d4db3_contact
+          - entity: sensor.0x00158d00034d4db3_linkquality
+          - entity: sensor.0x00158d00034d4db3_battery
+        type: entities
+      - type: entities
+        entities:
+          - sensor.st_johns_weir_water_level_stage
+      - type: entities
+        entities:
+          - switch.ashley_s_echo_dot_do_not_disturb_switch
+          - sensor.ashley_s_echo_dot_next_alarm
+          - sensor.ashley_s_echo_dot_next_reminder
+          - sensor.ashley_s_echo_dot_next_timer
+          - switch.ashley_s_echo_dot_repeat_switch
+          - switch.ashley_s_echo_dot_shuffle_switch
+      - type: media-control
+        entity: media_player.ashley_s_echo_dot
+    title: test
+  - badges: []
+    cards:
+      - entities:
+          - entity: automation.turn_the_ceiling_light_on_when_motion_is_detected
+        show_header_toggle: false
+        title: Automation Control
+        type: entities
       - entities:
           - entity: input_boolean.zigbee_permit_join
           - entity: timer.zigbee_permit_join
@@ -182,28 +224,46 @@ views:
         title: Zigbee
         type: entities
       - entities:
-          - entity: automation.turn_the_ceiling_light_on_when_motion_is_detected
-        show_header_toggle: false
-        title: Automation Control
+          - automation.new_automation_2
         type: entities
-      - entity: switch.tv
-        hold_action:
-          action: more-info
-        show_icon: true
-        show_name: true
-        tap_action:
-          action: toggle
-        type: entity-button
+    path: automation-control
+    title: automation control
+  - title: Heating
+    path: sitting-room
+    icon: ''
+    badges: []
+    cards:
+      - type: sensor
+        entity: sensor.0x001788010213b0e8_temperature
+        graph: line
+      - type: sensor
+        entity: sensor.lumi_lumi_weather_10474005_temperature
+        graph: line
+      - type: sensor
+        graph: line
+        entity: sensor.lumi_lumi_weather_temperature
+  - title: 3D Printer
+    path: 3d-printer
+    icon: 'mdi:printer'
+    badges: []
+    cards:
       - entities:
-          - sensor.curtain_status
+          - entity: sensor.dcp_j4120dw_black_toner_remaining
+          - entity: sensor.dcp_j4120dw_cyan_toner_remaining
+          - entity: sensor.dcp_j4120dw_magenta_toner_remaining
+          - entity: sensor.dcp_j4120dw_yellow_toner_remaining
+          - entity: sensor.dcp_j4120dw_status
         type: entities
-      - entities:
-          - entity: switch.ashley_s_echo_dot_do_not_disturb_switch
-          - entity: sensor.ashley_s_echo_dot_next_alarm
-          - entity: sensor.ashley_s_echo_dot_next_reminder
-          - entity: sensor.ashley_s_echo_dot_next_timer
-        show_header_toggle: false
-        type: entities 
-      - entity: media_player.ashley_s_echo_dot
-        type: media-control
-    title: test
+      - type: entities
+        entities:
+          - binary_sensor.octoprint_printing_error
+          - sensor.octoprint_job_percentage
+          - sensor.octoprint_current_state
+          - binary_sensor.octoprint_printing
+      - type: entities
+        entities:
+          - sensor.endor3d_energy_power
+          - sensor.endor3d_energy_today
+          - sensor.endor3d_energy_total
+          - sensor.endor3d_energy_voltage
+          - sensor.endor3d_energy_yesterday
