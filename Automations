@@ -96,9 +96,10 @@
     type: power
   condition: []
   action:
-  - data:
-      data:
-        type: tts
-      message: Mylord, your son would like to be removed from the washing machine
-      target: media_player.ashleys echo dot
-    service: notify.alexa_media_ashley_s_echo_dot   
+ service: tts.cloud_say
+ data:
+  entity_id: media_player.bedroom
+  message: Your Cat would like to be removed from the washing machine
+  options:
+    gender: female
+  language: en-US 
