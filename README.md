@@ -19,9 +19,9 @@ Aqua motion sensors x2
 
 Roku3
 
-Raspberry 3B running Kodi/libreelec
+Raspberry 4B running Kodi/libreelec
 
-Zigbee2mqtt added to set up, works fine
+Sonnoff zigbee bridge running tasmota.
 
 Software/apps
-No phone apps currently used as the ubuntu touch app is broken and unmaintained. The android app requires google services so it will not work on my ONplus3t phone
+Currently running the android app lite on lineage OS but restricted use with no google services. Ideally this depenancy on google servies nees to be changed.
