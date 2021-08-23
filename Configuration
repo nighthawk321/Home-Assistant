@@ -63,11 +63,6 @@ panel_iframe:
     url: http://***********
 
 
-# Example configuration.yaml entry
-weather: 
- - platform: darksky 
-   api_key: !secret darksky
-
 hacs:
   token: my private token
 
@@ -83,10 +78,8 @@ sensor:
   - platform: mqtt
     name: Bridge state
     state_topic: "zigbee2m"
-  platform: waqi
-    token: AQICN_API_TOKEN
-    locations:
-       - oxford  
+
+- platform: cpuspeed
      
 mqtt:
   broker: core-mosquitto # This will have to be your mqtt broker, Mosquitto addon is recommended.
@@ -109,6 +102,36 @@ resources:
 - type: disk_use_percent
 arg: /home
 - type: memory_free
+
+amcrest:
+  - host: http://
+    username: ash
+    password: !secret amcrest
+    name: Front Camera
+    binary_sensors:
+      - motion_detected
+      - online
+    sensors:
+      - sdcard
+telegram_bot:
+  - platform: polling
+    api_key: secret
+    allowed_chat_ids:
+      - secret
+notify:
+  - platform: telegram
+    name: telegram
+    chat_id
+    
+    
+octoprint:
+  host: octopi.local
+  api_key: !secret octoprint
+  sensors:
+    monitored_conditions:
+      - "Current State"
+      - "Job Percentage"
+
 group: !include groups.yaml
 automation: !include automations.yaml
 script: !include scripts.yaml
