@@ -6,134 +6,123 @@ title: Home
 views:
   - badges: []
     cards:
-      - entities:
-          - sensor.house_hold
-          - sensor.recycle
-        type: entities
       - aspect_ratio: 0%
         camera_view: live
         entity: camera.front_camera
         type: picture-entity
-      - type: entity
-        entity: binary_sensor.lumi_lumi_sensor_magnet_aq2_on_off
-        icon: 'mdi:key'
-        name: Front Garage Door
-      - type: entity
-        entity: binary_sensor.lumi_lumi_sensor_magnet_aq2_7c185c04_on_off
-        name: Shed
-        icon: 'hass:key'
-      - type: weather-forecast
-        entity: weather.openweathermap
       - entities:
-          - entity: sensor.front_camera_sd_used
-          - entity: binary_sensor.front_camera_online
-          - entity: binary_sensor.front_camera_motion_detected
+          - sensor.house_hold
+          - sensor.recycle
         type: entities
-    icon: 'mdi:castle'
+      - type: horizontal-stack
+        cards:
+          - type: entity
+            entity: binary_sensor.lumi_lumi_sensor_magnet_b34d4d03_on_off
+            icon: mdi:door
+          - type: entity
+            entity: binary_sensor.lumi_lumi_sensor_magnet_on_off
+      - type: horizontal-stack
+        cards:
+          - type: entity
+            entity: binary_sensor.lumi_lumi_sensor_magnet_aq2_on_off
+            icon: mdi:key
+            name: Front Garage Door
+          - type: entity
+            entity: binary_sensor.lumi_lumi_sensor_magnet_aq2_7c185c04_on_off
+            name: Shed Door
+            icon: mdi:key
+      - type: custom:weather-card
+        entity: weather.openweathermap
+        number_of_forecasts: '5'
+    icon: mdi:castle
     path: default_view
     title: Home
   - badges: []
     cards:
-      - entities:
-          - entity: binary_sensor.0x001788010213b0e8_occupancy
-          - entity: sensor.0x001788010213b0e8_battery
-        type: glance
-      - artwork: cover
-        entity: media_player.kodi_libreelec_local
-        hide:
-          power_state: false
-          source: false
-          volume: true
-        type: 'custom:mini-media-player'
-      - entity: media_player.roku_1ws3aj009179
-        type: media-control
-      - entity: switch.tv
-        hold_action:
-          action: more-info
-        show_icon: true
-        show_name: true
-        tap_action:
-          action: toggle
-        type: entity-button
       - type: grid
         cards:
           - type: light
-            entity: light.0xd0cf5efffec2b83c_light
+            entity: light.bedside_light_level_light_color_on_off
+            name: Bedside light
           - type: light
-            entity: light.0xd0cf5efffec63b45_light
+            entity: light.ceiling_light_level_light_color_on_off
+            name: Ceiling light
           - type: light
             entity: light.curtain
-      - entity: climate.my_heater_climate
-        type: thermostat
-      - type: media-control
-        entity: media_player.spotify_ashleycrue
+      - type: custom:roku-card
+        entity: media_player.roku_1ws3aj009179
+        tv: true
+        apps:
+          - image: /local/Primevideo.png
+            app: PrimeVideo
+          - image: /local/Youtube.png
+            app: YouTube
+            hold_action:
+              action: call-service
+              service: media_player.select_source
+              service_data:
+                source: Youtube
+                entity_id: remote.roku_1ws3aj009179
+        volume_down:
+          double_tap_action:
+            action: call-service
+            service: remote.send_command
+            service_data:
+              entity_id: remote.roku_1ws3aj009179
+              command: volume_down
+        volume_up:
+          double_tap_action:
+            action: call-service
+            service: remote.send_command
+            service_data:
+              entity_id: remote.65_tcl_roku_tv
+              command: volume_up
       - type: media-control
         entity: media_player.bedroom
-      - entities:
-          - sensor.discogs_collection
-          - sensor.discogs_wantlist
-        title: Discogs
-        type: entities
-    icon: 'mdi:cake'
+      - type: horizontal-stack
+        cards:
+          - type: button
+            tap_action:
+              action: toggle
+            entity: switch.tv
+          - type: thermostat
+            entity: climate.my_heater_thermostat
+      - type: custom:mini-media-player
+        entity: media_player.libreelec_2
+        artwork: full-cover
+        source: full
+        info: short
+        replace_mute: play_pause
+    icon: mdi:cake
     path: my-room
     title: My Room
   - badges: []
     cards:
       - entities:
-          - binary_sensor.0x00158d0002427402_occupancy
-          - sensor.0x00158d0002427402_linkquality
-          - sensor.0x00158d0002427402_battery
+          - entity: binary_sensor.lumi_lumi_sensor_motion_occupancy
+          - entity: binary_sensor.lumi_lumi_sensor_motion_ias_zone
         title: 'Landing '
         type: glance
       - entities:
-          - entity: binary_sensor.0x00158d000315f0ea_occupancy
-          - entity: sensor.0x00158d000315f0ea_linkquality
-          - entity: sensor.0x00158d000315f0ea_battery
+          - entity: binary_sensor.lumi_lumi_sensor_motion_aq2_ias_zone
+          - entity: binary_sensor.lumi_lumi_sensor_motion_aq2_occupancy
         title: Hallway
         type: glance
-    icon: 'mdi:stairs'
+      - type: entities
+        entities:
+          - binary_sensor.lumi_lumi_sensor_wleak_aq1_ias_zone
+      - type: entities
+        entities:
+          - binary_sensor.lumi_lumi_sensor_wleak_aq1_de312104_ias_zone
+      - type: entities
+        entities:
+          - binary_sensor.lumi_lumi_sensor_wleak_aq1_3c08b106_ias_zone
+      - type: entities
+        entities:
+          - entity: binary_sensor.lumi_lumi_sensor_magnet_4c274b05_on_off
+    icon: mdi:stairs
     path: Upstairs
     title: Upstairs
-  - badges: []
-    cards:
-      - entities:
-          - entity: switch.tumble_dryer
-          - entity: sensor.tumble_dryer_energy_current
-          - entity: sensor.tumble_dryer_energy_power
-          - entity: sensor.tumble_dryer_energy_today
-          - entity: sensor.tumble_dryer_energy_yesterday
-          - entity: sensor.tumble_dryer_status
-        show_header_toggle: false
-        type: entities
-      - entities:
-          - entity: switch.washing_machine
-          - entity: sensor.washing_machine_energy_current
-          - entity: sensor.washing_machine_energy_power
-          - entity: sensor.washing_machine_energy_today
-          - entity: sensor.washing_machine_energy_yesterday
-          - entity: sensor.washing_machine_status
-        type: entities
-      - entities:
-          - entity: switch.big_freezer
-          - entity: sensor.big_freezer_energy_current
-          - entity: sensor.big_freezer_energy_power
-          - entity: sensor.big_freezer_energy_today
-          - entity: sensor.big_freezer_energy_total
-          - entity: sensor.big_freezer_energy_yesterday
-          - entity: sensor.big_freezer_status
-        type: entities
-      - entities:
-          - entity: sensor.little_freezer_energy_current
-          - entity: sensor.little_freezer_energy_power
-          - entity: sensor.little_freezer_energy_today
-          - entity: sensor.little_freezer_energy_total
-          - entity: sensor.little_freezer_energy_totalstarttime
-          - entity: sensor.little_freezer_energy_yesterday
-          - entity: sensor.little_freezer_status
-        type: entities
-    icon: 'mdi:door'
-    path: utility
-    title: Utility
   - badges: []
     cards:
       - entity: sensor.disk_use_percent_home
@@ -157,32 +146,42 @@ views:
         refresh_interval: 0
         title: Memory Free
         type: history-graph
-      - cards:
-          - entity: sensor.speedtest_download
-            max: 100
+      - type: horizontal-stack
+        cards:
+          - type: gauge
             min: 0
-            severity:
-              green: 4
-              red: 0
-              yellow: 0
-            type: gauge
-          - entity: sensor.speedtest_upload
             max: 100
+            entity: sensor.speedtest_download
+          - type: gauge
             min: 0
-            type: gauge
-          - entity: sensor.speedtest_ping
             max: 100
+            entity: sensor.speedtest_upload
+          - type: gauge
+            entity: sensor.speedtest_ping
             min: 0
-            severity:
-              green: 0
-              red: 0
-              yellow: 0
-            type: gauge
-        type: horizontal-stack
-    icon: 'mdi:monitor'
+            max: 100
+      - type: sensor
+        graph: line
+        entity: sensor.oneplus_a3003_battery_level
+    icon: mdi:monitor
     title: Device Moniter
   - badges: []
     cards:
+      - type: custom:battery-state-card
+        title: Battery levels
+        entities:
+          - sensor.lumi_lumi_sensor_motion_aq2_power
+          - sensor.lumi_lumi_sensor_magnet_b34d4d03_power
+          - sensor.lumi_lumi_sensor_wleak_aq1_power
+          - sensor.bedroom_motion_power
+          - sensor.my_heater_power
+          - sensor.lumi_lumi_sensor_magnet_power
+          - sensor.lumi_lumi_sensor_magnet_aq2_power
+          - sensor.lumi_lumi_sensor_magnet_aq2_7c185c04_power
+          - sensor.lumi_lumi_sensor_motion_power
+          - sensor.lumi_lumi_sensor_wleak_aq1_de312104_power
+          - sensor.lumi_lumi_sensor_magnet_4c274b05_power
+          - sensor.lumi_lumi_sensor_magnet_9b3b2205_power
       - entity: sensor.hacs
         theme: Backend-selected
         type: sensor
@@ -190,39 +189,22 @@ views:
           - sensor.curtain_status
         type: entities
       - entities:
-          - entity: binary_sensor.0x00158d00034d4db3_contact
-          - entity: sensor.0x00158d00034d4db3_linkquality
-          - entity: sensor.0x00158d00034d4db3_battery
+          - entity: sensor.front_camera_sd_used
+          - entity: binary_sensor.front_camera_online
+          - entity: binary_sensor.front_camera_motion_detected
         type: entities
+      - entities:
+          - entity: binary_sensor.bedroom_motion_on_off
+          - entity: binary_sensor.bedroom_motion_occupancy
+        type: glance
       - type: entities
         entities:
-          - sensor.st_johns_weir_water_level_stage
-      - type: entities
-        entities:
-          - switch.ashley_s_echo_dot_do_not_disturb_switch
-          - sensor.ashley_s_echo_dot_next_alarm
-          - sensor.ashley_s_echo_dot_next_reminder
-          - sensor.ashley_s_echo_dot_next_timer
-          - switch.ashley_s_echo_dot_repeat_switch
-          - switch.ashley_s_echo_dot_shuffle_switch
-      - type: media-control
-        entity: media_player.ashley_s_echo_dot
+          - binary_sensor.lumi_lumi_sensor_motion_aq2_11f65b07_ias_zone
+          - sensor.lumi_lumi_sensor_motion_aq2_11f65b07_illuminance
+          - binary_sensor.lumi_lumi_sensor_motion_aq2_11f65b07_occupancy
     title: test
   - badges: []
     cards:
-      - entities:
-          - entity: automation.turn_the_ceiling_light_on_when_motion_is_detected
-        show_header_toggle: false
-        title: Automation Control
-        type: entities
-      - entities:
-          - entity: input_boolean.zigbee_permit_join
-          - entity: timer.zigbee_permit_join
-          - entity: sensor.bridge_state
-        show_header_toggle: false
-        theme: Backend-selected
-        title: Zigbee
-        type: entities
       - entities:
           - automation.new_automation_2
         type: entities
@@ -233,18 +215,29 @@ views:
     icon: ''
     badges: []
     cards:
-      - type: sensor
-        entity: sensor.0x001788010213b0e8_temperature
-        graph: line
-      - type: sensor
-        entity: sensor.lumi_lumi_weather_10474005_temperature
-        graph: line
-      - type: sensor
-        graph: line
-        entity: sensor.lumi_lumi_weather_temperature
+      - type: custom:mini-graph-card
+        entities:
+          - sensor.lumi_lumi_weather_10474005_temperature
+        name: LIVING ROOM
+        line_color: yellow
+        hours_to_show: 24
+        points_per_hour: 0.25
+      - type: custom:mini-graph-card
+        entities:
+          - sensor.lumi_lumi_weather_temperature
+        name: Kitchen
+        hours_to_show: 24
+        points_per_hour: 0.25
+      - type: custom:mini-graph-card
+        entities:
+          - sensor.bedroom_motion_temperature
+        name: My Room
+        line_color: green
+        hours_to_show: 24
+        points_per_hour: 0.25
   - title: 3D Printer
     path: 3d-printer
-    icon: 'mdi:printer'
+    icon: mdi:printer
     badges: []
     cards:
       - entities:
@@ -267,3 +260,7 @@ views:
           - sensor.endor3d_energy_total
           - sensor.endor3d_energy_voltage
           - sensor.endor3d_energy_yesterday
+  - title: Air
+    path: air
+    badges: []
+    cards: [
