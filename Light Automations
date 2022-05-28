@@ -1,0 +1,36 @@
+##The automation to turn of any lights when the nfc tag is scanned##
+
+alias: Tag Go to work is scanned
+description: ''
+trigger:
+  - platform: tag
+    tag_id: 47cc6fca-b432-42f7-b6b1-7ef2ffdc6ac4
+condition: []
+action:
+  - type: turn_off
+    device_id: 2c191a11f4b4da61c07041d492198e02
+    entity_id: light.tz3000_dbou1ap4_ts0505a_7adddbfe_level_light_color_on_off
+    domain: light
+mode: single
+
+
+##For night time when motion is detected the bedside light comes on##
+
+alias: bedside night time
+description: ''
+trigger:
+  - type: motion
+    platform: device
+    device_id: 5778cb108e96ffd91549aa1ca65fa7a6
+    entity_id: binary_sensor.lumi_lumi_sensor_motion_aq2_11f65b07_ias_zone
+    domain: binary_sensor
+condition:
+  - condition: time
+    after: '21:00'
+    before: '04:50'
+action:
+  - type: turn_on
+    device_id: 2c191a11f4b4da61c07041d492198e02
+    entity_id: light.tz3000_dbou1ap4_ts0505a_7adddbfe_level_light_color_on_off
+    domain: light
+mode: single
