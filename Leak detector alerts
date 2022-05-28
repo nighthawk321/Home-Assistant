@@ -1,0 +1,64 @@
+##Bathroom toilet leak detected##
+
+alias: Bathroom bog leak
+description: ''
+trigger:
+  - type: moist
+    platform: device
+    device_id: ec8291e8e201e65aeb9047a42757a631
+    entity_id: binary_sensor.lumi_lumi_sensor_wleak_aq1_de312104_ias_zone
+    domain: binary_sensor
+condition: []
+action:
+  - service: notify.mobile_app_oneplus_a3003
+    data:
+      title: Alert
+      message: The bog is taking is leak
+  - service: telegram_bot.send_message
+    data:
+      title: Alert
+      message: the main bog is leaking
+mode: single
+
+##Main Bathroom sink is leaking##
+
+alias: bathroom leak
+description: ''
+trigger:
+  - type: moist
+    platform: device
+    device_id: 742f672f1da26a217b1c0e26969ae9cd
+    entity_id: binary_sensor.lumi_lumi_sensor_wleak_aq1_ias_zone
+    domain: binary_sensor
+condition: []
+action:
+  - service: telegram_bot.send_message
+    data:
+      title: alert
+      message: The bathroom sink is leaking
+  - service: notify.mobile_app_oneplus_a3003
+    data:
+      message: The sink is leaking
+      title: Alert
+mode: single
+
+##The front bay window is leaking##
+
+alias: Leaking Window
+description: ''
+trigger:
+  - type: moist
+    platform: device
+    device_id: bbd324e21e704047079152252df64b12
+    entity_id: binary_sensor.lumi_lumi_sensor_wleak_aq1_3cdab006_ias_zone
+    domain: binary_sensor
+condition: []
+action:
+  - service: notify.telegram
+    data:
+      message: The window is taking a leak
+  - service: notify.mobile_app_oneplus_a3003
+    data:
+      message: Your window as water the wrong side of it
+      title: Alert
+mode: single
