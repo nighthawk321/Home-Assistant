@@ -1,5 +1,5 @@
 # Home-Assistant
-My current set up for my home automation is based on Hassio running on a Raspberry Pi4 2gb
+My current set up for my home automation is based on an old computer running ubuntu 20.04 LTS and docker
 
 Current Hardware-
 
