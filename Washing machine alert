@@ -1,0 +1,25 @@
+##An alert through the app automation for when the washing machine is done##
+
+alias: Washing as finished
+description: washing is done
+trigger:
+  - below: 0.5
+    device_id: 58955ada56ff4d8eacd5a7a158251169
+    domain: sensor
+    entity_id: sensor.washing_machine_energy_power
+    platform: device
+    type: power
+condition: []
+action:
+  - service: tts.cloud_say
+    data:
+      entity_id: media_player.bedroom
+      message: Your Cat would like to be removed from the washing machine
+      options:
+        gender: female
+      language: en-US
+  - service: notify.mobile_app_oneplus_a3003
+    data:
+      message: My lord your washing is done
+      title: Alert
+mode: single
