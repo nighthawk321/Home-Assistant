@@ -1,0 +1,56 @@
+##To play a particular station when the tag is scanned on the sonos##
+##station can be changed when required##
+
+alias: Tag Music is scanned
+description: ''
+trigger:
+  - platform: tag
+    tag_id: 78f78e3b-b43f-4ed1-af48-60e4d7e4ffbd
+condition: []
+action:
+  - service: media_player.play_media
+    target:
+      entity_id: media_player.bedroom
+    data:
+      media_content_id: media-source://radio_browser/327f4b1f-c5c7-42bd-b69d-87bac85b8d7b
+      media_content_type: audio/mpeg
+    metadata:
+      title: 'DrGnu - Symphonic Metal '
+      thumbnail: https://i.postimg.cc/W4xFNt37/Gnu-Radio-BOB.png
+      media_class: music
+      children_media_class: null
+      navigateIds:
+        - {}
+        - media_content_type: app
+          media_content_id: media-source://radio_browser
+        - media_content_type: music
+          media_content_id: media-source://radio_browser/tag
+        - media_content_type: music
+          media_content_id: media-source://radio_browser/tag/metal
+mode: single
+
+##Turn the TV on and off by scanning the nfc tag##
+
+alias: Tag Tv is scanned
+description: ''
+trigger:
+  - platform: tag
+    tag_id: 04bea537-24cc-4de5-9ebb-dc3cef9859a9
+condition: []
+action:
+  - type: turn_on
+    device_id: a3a96c57170df22515bc463aa449dde3
+    entity_id: switch.tv
+    domain: switch
+  - if:
+      - condition: device
+        type: is_on
+        device_id: a3a96c57170df22515bc463aa449dde3
+        entity_id: switch.tv
+        domain: switch
+    then:
+      - type: turn_off
+        device_id: a3a96c57170df22515bc463aa449dde3
+        entity_id: switch.tv
+        domain: switch
+mode: single
