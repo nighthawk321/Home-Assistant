@@ -1,0 +1,36 @@
+esphome:
+  name: "ikea-air"
+
+esp8266:
+  board: d1_mini
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+
+ota:
+
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Esphome-Web-D18480"
+    password: "V4ekIUDl4wct"
+
+captive_portal:
+
+# Example configuration entry
+uart:
+  rx_pin: D2
+  baud_rate: 9600
+
+
+sensor:
+  - platform: pm1006
+    pm_2_5:
+      name: "Particulate Matter 2.5µm Concentration"
