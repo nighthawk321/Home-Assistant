@@ -1,0 +1,19 @@
+alias: open the curtains
+description: ""
+trigger:
+  - platform: sun
+    event: sunrise
+    offset: "+00:30:00"
+condition: []
+action:
+  - device_id: a8c5d6d76b56b6ec6a54c7a44fc46196
+    domain: cover
+    entity_id: cover.0x54ef4410004ffdc5
+    type: set_position
+    position: 100
+  - device_id: 8a79c18a845de0a2e82ba81355f5e893
+    domain: cover
+    entity_id: cover.left_curtain
+    type: set_position
+    position: 100
+mode: single
