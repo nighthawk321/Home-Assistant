@@ -1,0 +1,23 @@
+#relies on input helpers
+
+alias: Alarm clock
+description: ""
+trigger:
+  - platform: time
+    at: input_datetime.alarm_clock
+condition:
+  - condition: and
+    conditions:
+      - condition: state
+        entity_id: input_boolean.alarm
+        state: "on"
+action:
+  - type: turn_on
+    device_id: 9f5a802696019043488db47f3bcaa096
+    entity_id: light.bedside_light
+    domain: light
+  - service: tts.cloud_say
+    data:
+      entity_id: media_player.bedroom
+      message: Good morning my lord time to get out off bed and recharge your phone
+mode: single
