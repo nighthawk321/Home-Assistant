@@ -1,0 +1,130 @@
+title: Home
+views:
+  - path: default_view
+    title: Home
+    cards:
+      - type: custom:weather-card
+        entity: weather.openweathermap
+        number_of_forecasts: '5'
+      - type: custom:weather-radar-card
+        data_source: RainViewer-Original
+        show_recenter: false
+        extra_labels: false
+        show_marker: true
+        map_style: Satellite
+        zoom_level: 9
+        static_map: true
+      - type: vertical-stack
+        cards:
+          - type: entity
+            entity: sensor.recycle
+            state_color: true
+          - type: entity
+            entity: sensor.general_bin
+            state_color: true
+      - type: horizontal-stack
+        cards:
+          - type: entity
+            entity: input_datetime.alarm_clock
+          - type: entities
+            entities:
+              - entity: input_boolean.alarm
+  - theme: Backend-selected
+    title: new
+    path: new
+    badges: []
+    cards:
+      - type: entities
+        entities:
+          - sensor.wemos_d1_mini_smoke_sensor
+        title: Garage
+      - type: entities
+        entities:
+          - sensor.hacs
+        title: Home
+  - theme: Backend-selected
+    title: My Room
+    path: my-room
+    badges: []
+    cards:
+      - type: custom:better-thermostat-ui-card
+        entity: climate.shellytrv_8cf6811870df
+        name: My Heater
+      - type: custom:mushroom-light-card
+        entity: light.bedside_light
+        secondary_info: state
+        use_light_color: true
+        show_brightness_control: true
+        show_color_control: true
+        show_color_temp_control: true
+      - type: custom:mushroom-cover-card
+        entity: cover.left_curtain
+        show_position_control: true
+        show_tilt_position_control: false
+        show_buttons_control: true
+      - type: custom:mushroom-cover-card
+        entity: cover.right_curtain
+        secondary_info: state
+        show_position_control: true
+        show_buttons_control: true
+      - type: custom:mushroom-light-card
+        entity: light.ceiling_light
+        primary_info: state
+        show_brightness_control: true
+        show_color_temp_control: true
+        use_light_color: false
+        name: Ceiling Light
+        secondary_info: name
+      - type: custom:mini-media-player
+        entity: media_player.bedroom
+        artwork: full-cover
+        source: full
+        info: short
+        replace_mute: play_stop
+        toggle_power: true
+  - theme: Backend-selected
+    title: Camera
+    path: camera
+    badges: []
+    cards:
+      - show_state: true
+        show_name: true
+        camera_view: auto
+        type: picture-entity
+        image: https://demo.home-assistant.io/stub_config/bedroom.png
+        entity: camera.front_camera
+  - theme: Backend-selected
+    title: Batteries
+    path: batteries
+    badges: []
+    cards:
+      - type: custom:battery-state-card
+        title: Leak Sensor
+        color_thresholds:
+          - value: 20
+            color: red
+          - value: 60
+            color: yellow
+        entities:
+          - sensor.bay_window_leak_battery
+          - sensor.shellyflood_00eec4_battery
+          - sensor.utility_leak_battery
+      - type: custom:battery-state-card
+        title: Heating
+        color_thresholds:
+          - value: 20
+            color: red
+          - value: 60
+            color: yellow
+        entities:
+          - sensor.shellytrv_8cf6811870df_battery
+      - type: custom:battery-state-card
+        title: Curtains
+        color_thresholds:
+          - value: 20
+            color: red
+          - value: 60
+            color: yellow
+        entities:
+          - sensor.left_curtain_battery
+          - sensor.right_curtain_battery
