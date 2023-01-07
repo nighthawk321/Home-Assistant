@@ -16,12 +16,10 @@ views:
         static_map: true
       - type: vertical-stack
         cards:
-          - type: entity
+          - type: custom:mushroom-entity-card
             entity: sensor.recycle
-            state_color: true
-          - type: entity
+          - type: custom:mushroom-entity-card
             entity: sensor.general_bin
-            state_color: true
       - type: horizontal-stack
         cards:
           - type: entity
@@ -29,6 +27,11 @@ views:
           - type: entities
             entities:
               - entity: input_boolean.alarm
+      - initial_view: listWeek
+        type: calendar
+        entities:
+          - calendar.garbage_collection
+          - calendar.personal
   - theme: Backend-selected
     title: new
     path: new
@@ -36,12 +39,27 @@ views:
     cards:
       - type: entities
         entities:
-          - sensor.wemos_d1_mini_smoke_sensor
-        title: Garage
-      - type: entities
-        entities:
           - sensor.hacs
         title: Home
+      - type: gauge
+        entity: sensor.wemos_d1_mini_smoke_sensor
+        min: 0
+        max: 100
+        needle: true
+        severity:
+          green: 0
+          yellow: 50
+          red: 80
+      - type: gauge
+        entity: sensor.particulate_matter_2_5um_concentration
+        name: kitchen air
+        min: 0
+        max: 100
+        needle: true
+        severity:
+          green: 0
+          yellow: 50
+          red: 80
   - theme: Backend-selected
     title: My Room
     path: my-room
@@ -93,6 +111,8 @@ views:
         type: picture-entity
         image: https://demo.home-assistant.io/stub_config/bedroom.png
         entity: camera.front_camera
+      - type: picture-entity
+        entity: camera.octoprint_camera
   - theme: Backend-selected
     title: Batteries
     path: batteries
@@ -128,3 +148,61 @@ views:
         entities:
           - sensor.left_curtain_battery
           - sensor.right_curtain_battery
+  - theme: Backend-selected
+    title: Audio
+    path: audio
+    badges: []
+    cards:
+      - type: custom:mini-media-player
+        entity: media_player.raspiaudio_muse_luxe
+        artwork: full-cover
+        source: full
+        info: short
+        replace_mute: play_stop
+        toggle_power: true
+  - theme: Backend-selected
+    title: Endor
+    path: endor
+    badges: []
+    cards:
+      - type: entities
+        entities:
+          - entity: button.octoprint_pause_job
+            name: Pause Job
+          - entity: button.octoprint_resume_job
+            name: Resume Job
+          - entity: button.octoprint_stop_job
+            name: Stop Job
+        title: OctoPrint
+      - type: grid
+        square: false
+        columns: 1
+        cards:
+          - type: entities
+            entities:
+              - entity: sensor.octoprint_actual_w_temp
+                name: Actual W temp
+              - entity: sensor.octoprint_actual_bed_temp
+                name: Actual bed temp
+              - entity: sensor.octoprint_actual_tool0_temp
+                name: Actual tool0 temp
+              - entity: sensor.octoprint_current_state
+                name: Current State
+              - entity: sensor.octoprint_estimated_finish_time
+                name: Estimated Finish Time
+              - entity: sensor.octoprint_job_percentage
+                name: Job Percentage
+              - entity: binary_sensor.octoprint_printing
+                name: Printing
+              - entity: binary_sensor.octoprint_printing_error
+                name: Printing Error
+              - entity: sensor.octoprint_start_time
+                name: Start Time
+              - entity: sensor.octoprint_target_w_temp
+                name: Target W temp
+              - entity: sensor.octoprint_target_bed_temp
+                name: Target bed temp
+              - entity: sensor.octoprint_target_tool0_temp
+                name: Target tool0 temp
+            title: OctoPrint
+
