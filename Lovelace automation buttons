@@ -1,0 +1,31 @@
+#button to close my curtains
+
+show_name: true
+show_icon: true
+type: button
+tap_action:
+  action: call-service
+  service: automation.trigger
+  target:
+    entity_id: automation.close_the_curtain_2
+  data:
+    skip_condition: true
+show_state: false
+icon: mdi:curtains-closed
+name: Close The Curtains
+
+
+#button to open the curtains
+
+show_name: true
+show_icon: true
+type: button
+tap_action:
+  action: call-service
+  service: automation.trigger
+  target:
+    entity_id: automation.open_the_curtain
+  data:
+    skip_condition: true
+entity: automation.open_the_curtain
+icon: mdi:curtains
