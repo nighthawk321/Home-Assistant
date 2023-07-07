@@ -1,21 +1,19 @@
-cch:
-  chevrons: true
-  redirect: false
-  warning: false
 title: Home
 views:
-  - badges: []
+  - path: default_view
+    title: Home
     cards:
-      - show_state: true
-        show_name: true
-        camera_view: live
-        aspect_ratio: 0%
-        entity: camera.front_camera
-        type: picture-entity
-        camera_image: camera.front_camera
       - type: custom:weather-card
         entity: weather.openweathermap
         number_of_forecasts: '5'
+      - type: custom:weather-radar-card
+        data_source: RainViewer-Original
+        show_recenter: false
+        extra_labels: false
+        show_marker: true
+        map_style: Satellite
+        zoom_level: 9
+        static_map: true
       - type: horizontal-stack
         cards:
           - type: entity
@@ -23,338 +21,304 @@ views:
           - type: entities
             entities:
               - entity: input_boolean.alarm
-            show_header_toggle: false
-            title: 'Alarm '
-      - type: vertical-stack
-        cards:
-          - type: custom:mushroom-entity-card
-            entity: sensor.recycle
-            icon_type: icon
-            layout: horizontal
-            fill_container: false
-            primary_info: name
-            secondary_info: state
-          - type: custom:mushroom-entity-card
-            entity: sensor.house_hold
-      - type: custom:weather-radar-card
-        card_title: Radar
-        map_style: Satellite
-        zoom_level: 9
-        data_source: RainViewer-Original
-        show_marker: false
-        static_map: false
-        show_range: false
-        extra_labels: false
-        show_scale: true
-    icon: mdi:castle
-    path: default_view
-    title: Home
-  - badges: []
+      - initial_view: listWeek
+        type: calendar
+        entities:
+          - calendar.recycle_bins
+          - calendar.bin
+          - calendar.personal
+  - theme: Backend-selected
+    title: Camera
+    path: camera
+    badges: []
     cards:
-      - type: horizontal-stack
-        cards:
-          - type: button
-            tap_action:
-              action: toggle
-            entity: switch.tv
-          - type: thermostat
-            entity: climate.my_heater
-      - type: custom:mini-media-player
-        entity: media_player.libreelec_2
-        artwork: full-cover
-        source: full
-        info: short
-        replace_mute: play_pause
-      - type: custom:mini-media-player
-        entity: media_player.roku_1ws3aj009179
-      - type: custom:mini-media-player
-        entity: media_player.bedroom
-        artwork: full-cover
-        source: full
-        info: short
-        replace_mute: play_pause
-      - type: custom:mushroom-cover-card
-        entity: cover.0x54ef4410004ffdc5
-        icon_type: entity-picture
-        double_tap_action:
-          action: toggle
-        fill_container: false
-        primary_info: name
-        tap_action:
-          action: toggle
-        hold_action:
-          action: toggle
-        show_buttons_control: true
-        show_position_control: true
-        icon: mdi:curtains
-      - type: custom:mushroom-cover-card
-        entity: cover.left_curtain
-        icon_type: entity-picture
-        double_tap_action:
-          action: toggle
-        fill_container: false
-        primary_info: name
-        tap_action:
-          action: toggle
-        hold_action:
-          action: toggle
-        show_buttons_control: true
-        show_position_control: true
-        icon: mdi:curtains
-      - type: custom:mushroom-light-card
-        entity: light.ceiling_light
-        show_brightness_control: true
-        show_color_temp_control: true
-        show_color_control: true
+      - show_state: true
+        show_name: true
+        camera_view: auto
+        type: picture-entity
+        image: https://demo.home-assistant.io/stub_config/bedroom.png
+        entity: camera.front_camera
+  - theme: Backend-selected
+    title: My Room
+    path: my-room
+    badges: []
+    cards:
       - type: custom:mushroom-light-card
         entity: light.bedside_light
-        show_brightness_control: true
+        secondary_info: state
         use_light_color: true
+        show_brightness_control: true
         show_color_control: true
         show_color_temp_control: true
-    icon: mdi:cake
-    path: my-room
-    title: My Room
+      - type: custom:mushroom-light-card
+        entity: light.ceiling_light
+        primary_info: name
+        show_brightness_control: true
+        show_color_temp_control: true
+        use_light_color: false
+        name: Ceiling Light
+        secondary_info: name
+        icon_color: red
+        show_color_control: false
+      - type: horizontal-stack
+        cards:
+          - show_name: true
+            show_icon: true
+            type: button
+            tap_action:
+              action: call-service
+              service: automation.trigger
+              target:
+                entity_id: automation.close_the_curtain_2
+              data:
+                skip_condition: true
+            show_state: false
+            icon: mdi:curtains-closed
+            name: Close The Curtains
+          - show_name: true
+            show_icon: true
+            type: button
+            tap_action:
+              action: call-service
+              service: automation.trigger
+              target:
+                entity_id: automation.open_the_curtain
+              data:
+                skip_condition: true
+            entity: automation.open_the_curtain
+            icon: mdi:curtains
   - theme: Backend-selected
-    icon: mdi:security
-    path: Upstairs
-    title: Security
+    title: Heating
+    path: heating
     badges: []
     cards:
-      - type: horizontal-stack
-        cards:
-          - type: entity
-            entity: binary_sensor.lumi_lumi_sensor_magnet_opening_4
-            icon: mdi:key
-            name: Front Door
-            state_color: true
-          - type: entity
-            entity: binary_sensor.lumi_lumi_sensor_magnet_opening_3
-            name: Hall Backdoor
-            icon: mdi:key
-            state_color: true
-      - entities:
-          - entity: binary_sensor.landing_motion_occupancy
-        title: 'Landing '
-        type: glance
-      - type: horizontal-stack
-        cards:
-          - type: entity
-            entity: binary_sensor.lumi_lumi_sensor_magnet_aq2_opening
-            icon: mdi:key
-          - type: entity
-            entity: binary_sensor.lumi_lumi_sensor_magnet_aq2_opening_2
-            icon: mdi:key
-      - type: entities
-        entities:
-          - entity: binary_sensor.lumi_lumi_sensor_wleak_aq1_iaszone
-        title: Sitting Room Window
-      - type: entities
-        entities:
-          - entity: binary_sensor.utiity_flood_detector_flood
-            name: Flood
-        title: Utiity flood detector
-      - type: entities
-        entities:
-          - entity: binary_sensor.loft_tank_flood
-            name: Flood
-          - entity: sensor.loft_tank_temperature
-            name: Temperature
-        title: Loft Tank
-      - type: entities
-        entities:
-          - entity: binary_sensor.lumi_lumi_sensor_wleak_aq1_iaszone_3
-          - entity: binary_sensor.lumi_lumi_sensor_wleak_aq1_iaszone_2
-        title: Bathroom
-  - badges: []
-    cards:
-      - entity: sensor.disk_use_percent_home
-        graph: line
-        name: Disk Use
-        type: sensor
-      - entities:
-          - entity: sensor.tv_energy_current
-          - entity: sensor.tv_energy_total
-          - entity: sensor.tv_energy_today
-        type: entities
-      - entities:
-          - entity: sensor.cpu_speed
-        hours_to_show: 24
-        refresh_interval: 1
-        title: CPU Speed
-        type: history-graph
-      - entities:
-          - sensor.memory_free
-        hours_to_show: 24
-        refresh_interval: 0
-        title: Memory Free
-        type: history-graph
-      - type: horizontal-stack
-        cards:
-          - type: gauge
-            min: 0
-            max: 100
-            entity: sensor.speedtest_download
-          - type: gauge
-            min: 0
-            max: 100
-            entity: sensor.speedtest_upload
-          - type: gauge
-            entity: sensor.speedtest_ping
-            min: 0
-            max: 100
-      - type: sensor
-        graph: line
-        entity: sensor.oneplus_a3003_battery_level
-    icon: mdi:monitor
-    title: Device Moniter
-  - badges: []
-    cards:
-      - entity: sensor.hacs
-        theme: Backend-selected
-        type: sensor
-      - entities:
-          - entity: sensor.front_camera_sd_used
-          - entity: binary_sensor.front_camera_online
-          - entity: binary_sensor.front_camera_motion_detected
-        type: entities
-      - entities:
-          - entity: sensor.bedroom_motion_illuminance_lux
-          - entity: binary_sensor.bedroom_motion_occupancy
-        type: glance
-    title: test
-  - badges: []
-    cards:
-      - entities:
-          - automation.new_automation_2
-        type: entities
-    path: automation-control
-    title: automation control
-  - title: Heating
-    path: sitting-room
-    icon: ''
-    badges: []
-    cards:
+      - type: custom:better-thermostat-ui-card
+        entity: climate.shellytrv_8cf6811870df
+        name: My Heater
       - type: custom:mini-graph-card
         entities:
           - sensor.sittingroom_atcpvvx_temperature
         name: LIVING ROOM
-        line_color: yellow
-        hours_to_show: 24
-        points_per_hour: 0.25
+        hours_to_show: 20
+        points_per_hour: 1
+        line_color: blue
+        line_width: 6
+        font_size: 75
       - type: custom:mini-graph-card
         entities:
-          - sensor.lumi_lumi_weather_temperature
-        name: Kitchen
-        hours_to_show: 24
-        points_per_hour: 0.25
-      - type: custom:mini-graph-card
-        entities:
-          - sensor.bedroom_motion_temperature
-        name: My Room
-        line_color: red
-        hours_to_show: 24
-        points_per_hour: 0.25
-      - type: custom:mini-graph-card
-        entities:
-          - sensor.my_bedroom_temp_temperature
-        name: My Room
-        line_color: purple
-        hours_to_show: 24
-        points_per_hour: 0.25
-      - type: custom:mini-graph-card
-        entities:
-          - sensor.landing_temp_temperature
+          - sensor.landing_atcpvvx_temperature
         name: Landing
-        line_color: orange
-        hours_to_show: 24
-        points_per_hour: 0.25
+        hours_to_show: 20
+        points_per_hour: 1
+        line_color: red
+        line_width: 6
+        font_size: 75
       - type: custom:mini-graph-card
         entities:
-          - sensor.utiity_flood_detector_temperature
-        name: Utility
+          - sensor.mybedroom_atcpvvx_temperature
+        name: My Room
+        hours_to_show: 20
+        points_per_hour: 1
         line_color: green
-        hours_to_show: 24
-        points_per_hour: 0.25
-  - title: Areas
-    path: air
+        line_width: 8
+        font_size: 75
+  - title: Security
+    path: security
     badges: []
     cards:
-      - type: area
-        area: ff141e10e2c44dc49a5d67bc310558f8
-        theme: kibibit
-      - type: area
-        area: 5357840ed89941acac4c6531ea221aca
-      - type: area
-        area: 247473ec00b011ebb45123a0541b90fc
-      - type: area
-        area: 4d91a7af6272435eb2d7f9074715ec69
-      - type: area
-        area: bathroom
+      - type: horizontal-stack
+        cards:
+          - show_name: true
+            show_icon: true
+            type: button
+            tap_action:
+              action: toggle
+            entity: binary_sensor.lumi_lumi_sensor_magnet_aq2_opening_2
+            icon: mdi:key-chain
+          - show_name: true
+            show_icon: true
+            type: button
+            tap_action:
+              action: toggle
+            entity: binary_sensor.lumi_lumi_sensor_magnet_aq2_opening_3
+            icon: mdi:key
+      - type: horizontal-stack
+        cards:
+          - show_name: true
+            show_icon: true
+            type: button
+            tap_action:
+              action: toggle
+            entity: binary_sensor.lumi_lumi_sensor_magnet_opening
+            icon: mdi:key
+            name: Middle Back Door
+          - show_name: true
+            show_icon: true
+            type: button
+            tap_action:
+              action: toggle
+            entity: binary_sensor.lumi_lumi_sensor_magnet_aq2_opening
+            icon: mdi:key
+            name: Back Door
+          - show_name: true
+            show_icon: true
+            type: button
+            tap_action:
+              action: toggle
+            icon: mdi:key
+            entity: binary_sensor.front_door_contact
+            name: Front Door
   - theme: Backend-selected
-    title: Endor
-    path: 3d-printer
-    icon: ''
+    title: new
+    path: new
     badges: []
     cards:
       - type: entities
         entities:
-          - entity: sensor.octoprint_current_state_2
-            name: Current State
-          - entity: sensor.octoprint_estimated_finish_time_2
-            name: Estimated Finish Time
-          - entity: sensor.octoprint_job_percentage_2
-            name: Job Percentage
-          - entity: binary_sensor.octoprint_printing_2
-            name: Printing
-          - entity: binary_sensor.octoprint_printing_error_2
-            name: Printing Error
-          - entity: sensor.octoprint_start_time_2
-            name: Start Time
-          - entity: sensor.octoprint_actual_bed_temp
-            name: Actual bed temp
-          - entity: sensor.octoprint_actual_tool0_temp
-            name: Actual tool0 temp
-          - entity: sensor.octoprint_target_bed_temp
-            name: Target bed temp
-          - entity: sensor.octoprint_target_tool0_temp
-            name: Target tool0 temp
-        title: OctoPrint - Endor
+          - sensor.hacs
+        title: Home
+      - type: vertical-stack
+        cards:
+          - type: custom:mushroom-person-card
+            entity: device_tracker.oneplus_tech_shenzhen_e4_da_52
+            name: Ashley
+          - type: gauge
+            entity: sensor.oneplus_a3003_battery_level
+            name: My phone
       - type: entities
         entities:
-          - entity: sensor.endor3d_energy_today_2
-            name: ENERGY Today
-          - entity: sensor.endor3d_energy_total_2
-            name: ENERGY Total
-          - entity: sensor.endor3d_energy_voltage_2
-            name: ENERGY Voltage
-          - entity: sensor.endor3d_energy_voltage_2
-            name: ENERGY Yesterday
-        title: Endor3D
-      - type: entities
-        entities:
-          - entity: button.octoprint_pause_job_2
-            name: Pause Job
-          - entity: button.octoprint_resume_job_2
-            name: Resume Job
-          - entity: button.octoprint_stop_job_2
-            name: Stop Job
-        title: OctoPrint
-      - type: picture-entity
-        entity: camera.endor
+          - sensor.humidity
+          - sensor.illuminance
+          - binary_sensor.mmwave
+          - binary_sensor.occupancy
+          - binary_sensor.pir
+          - sensor.temperature
+        title: my-room-presence
   - theme: Backend-selected
-    title: Wookie
-    path: wookie
-    icon: ''
+    title: Batteries
+    path: batteries
     badges: []
     cards:
+      - type: custom:battery-state-card
+        title: Leak Sensor
+        color_thresholds:
+          - value: 20
+            color: red
+          - value: 60
+            color: yellow
+        entities:
+          - sensor.bay_window_leak_battery
+          - sensor.shellyflood_00eec4_battery
+          - sensor.utility_leak_battery
+          - sensor.lumi_lumi_sensor_wleak_aq1_battery
+          - sensor.lumi_lumi_sensor_wleak_aq1_battery_2
+      - type: custom:battery-state-card
+        title: Heating
+        color_thresholds:
+          - value: 20
+            color: red
+          - value: 60
+            color: yellow
+        entities:
+          - sensor.shellytrv_8cf6811870df_battery
+      - type: custom:battery-state-card
+        title: Curtains
+        color_thresholds:
+          - value: 20
+            color: red
+          - value: 60
+            color: yellow
+        entities:
+          - sensor.left_curtain_battery
+          - sensor.right_curtain_battery
+      - type: custom:battery-state-card
+        title: Motion Sensor
+        color_thresholds:
+          - value: 20
+            color: red
+          - value: 60
+            color: yellow
+        entities:
+          - sensor.bedroom_motion_battery
+          - sensor.bedside_motion_battery
+      - type: custom:battery-state-card
+        title: Door Sensor
+        color_thresholds:
+          - value: 20
+            color: red
+          - value: 60
+            color: yellow
+        entities:
+          - sensor.front_door_battery
+          - sensor.lumi_lumi_sensor_magnet_aq2_battery
+      - type: custom:battery-state-card
+        title: Key Sensor
+        color_thresholds:
+          - value: 20
+            color: red
+          - value: 60
+            color: yellow
+        entities:
+          - sensor.lumi_lumi_sensor_magnet_aq2_battery_2
+      - type: custom:battery-state-card
+        title: Themometer
+        color_thresholds:
+          - value: 20
+            color: red
+          - value: 60
+            color: yellow
+        entities:
+          - sensor.landing_atcpvvx_battery
+          - sensor.mybedroom_atcpvvx_battery
+          - sensor.sittingroom_atcpvvx_battery
+  - theme: Backend-selected
+    title: Audio
+    path: audio
+    badges: []
+    cards:
+      - type: custom:mini-media-player
+        entity: media_player.raspi_audio_muse_luxe
+        artwork: full-cover
+        source: full
+        info: short
+        replace_mute: play_stop
+        toggle_power: false
+        name: raspi audio
       - type: entities
         entities:
-          - entity: sensor.little_freezer_energy_total
-          - entity: sensor.little_freezer_energy_power
-          - entity: sensor.little_freezer_energy_today
-          - entity: sensor.little_freezer_energy_apparentpower
-        title: Wookie
+          - entity: switch.tv_2
+        title: TV
+        state_color: true
+      - type: custom:sonos-card
+  - theme: Backend-selected
+    title: Air Quality
+    path: air-quality
+    badges: []
+    cards:
+      - type: gauge
+        entity: sensor.wemos_d1_mini_smoke_sensor
+        min: 0
+        max: 100
+        needle: true
+        severity:
+          green: 0
+          yellow: 50
+          red: 80
+        name: Garage Smike Detector
+      - type: gauge
+        entity: sensor.particulate_matter_2_5um_concentration_2
+        name: Kitchen Air
+        min: 0
+        max: 100
+        needle: true
+        severity:
+          green: 0
+          yellow: 50
+          red: 80
+  - title: Endor
+    path: endor
+    badges: []
+    cards:
       - type: entities
         entities:
           - entity: button.octoprint_pause_job
@@ -364,111 +328,128 @@ views:
           - entity: button.octoprint_stop_job
             name: Stop Job
         title: OctoPrint
-      - type: entities
-        entities:
-          - entity: sensor.octoprint_current_state
-            name: Current State
-          - entity: sensor.octoprint_estimated_finish_time
-            name: Estimated Finish Time
-          - entity: sensor.octoprint_job_percentage
-            name: Job Percentage
-          - entity: binary_sensor.octoprint_printing
-            name: Printing
-          - entity: binary_sensor.octoprint_printing_error
-            name: Printing Error
-          - entity: sensor.octoprint_start_time
-            name: Start Time
-          - entity: sensor.octoprint_actual_w_temp
-            name: Actual W temp
-          - entity: sensor.octoprint_actual_bed_temp_2
-            name: Actual bed temp
-          - entity: sensor.octoprint_actual_tool0_temp_2
-            name: Actual tool0 temp
-          - entity: sensor.octoprint_target_w_temp
-            name: Target W temp
-          - entity: sensor.octoprint_target_bed_temp_2
-            name: Target bed temp
-          - entity: sensor.octoprint_target_tool0_temp_2
-            name: Target tool0 temp
-        title: OctoPrint
-      - type: picture-entity
-        entity: camera.wookie
-  - theme: Backend-selected
-    title: Battery Level
-    path: battery-level
-    icon: mdi:battery
-    badges: []
-    cards:
-      - type: custom:battery-state-card
-        title: Curtain Level
-        entities:
-          - sensor.0x54ef4410004ffdc5_battery
-          - sensor.left_curtain_battery
-      - type: custom:battery-state-card
-        title: Heater Valve
-        entities:
-          - sensor.my_heater_battery
-      - type: entities
-        entities:
-          - entity: sensor.bedroom_motion_battery
-          - entity: sensor.lumi_lumi_sensor_magnet_aq2_battery_3
-          - entity: sensor.lumi_lumi_sensor_wleak_aq1_battery_3
-          - entity: sensor.bed_motion_battery
-          - entity: sensor.bedroom_vibrate_battery
-          - entity: sensor.bedroom_ziggy_temperature_battery
-          - entity: sensor.lumi_lumi_sensor_magnet_battery_4
-          - entity: sensor.lumi_lumi_sensor_magnet_aq2_battery
-          - entity: sensor.lumi_lumi_sensor_magnet_battery_3
-          - entity: sensor.lumi_lumi_weather_battery
-          - entity: sensor.landing_motion_battery
-          - entity: sensor.lumi_lumi_sensor_magnet_battery_2
-      - type: custom:battery-state-card
-        title: Leak Sensor levels
-        entities:
-          - sensor.lumi_lumi_sensor_wleak_aq1_battery
-          - sensor.loft_tank_battery
-          - sensor.utiity_flood_detector_battery
-  - theme: Backend-selected
-    title: Energy Usage
-    path: energy-usage
-    icon: mdi:lightning-bolt
-    badges: []
-    cards:
-      - type: horizontal-stack
+      - type: grid
+        square: false
+        columns: 1
         cards:
-          - show_name: true
-            show_icon: true
-            type: button
-            tap_action:
-              action: toggle
-            entity: sensor.bedside_light_energy
-            show_state: true
-          - show_name: true
-            show_icon: true
-            type: button
-            tap_action:
-              action: toggle
-            entity: sensor.ceiling_light_energy
-            show_state: true
-  - theme: Backend-selected
-    title: Garage
-    path: garage
+          - type: entities
+            entities:
+              - entity: sensor.octoprint_actual_bed_temp
+                name: Actual bed temp
+              - entity: sensor.octoprint_actual_tool0_temp
+                name: Actual tool0 temp
+              - entity: sensor.octoprint_actual_w_temp
+                name: Actual W temp
+              - entity: binary_sensor.octoprint_printing_error
+                name: Printing Error
+              - entity: sensor.octoprint_start_time
+                name: Start Time
+              - entity: sensor.octoprint_target_bed_temp
+                name: Target bed temp
+              - entity: sensor.octoprint_target_tool0_temp
+                name: Target tool0 temp
+              - entity: sensor.octoprint_target_w_temp
+                name: Target W temp
+            title: OctoPrint
+      - type: custom:bar-card
+        entities:
+          - entity: sensor.octoprint_job_percentage
+            name: Endor Progress
+        color: blue
+        title: Endors Progress
+      - type: grid
+        cards:
+          - type: tile
+            entity: sensor.octoprint_current_state
+            name: Status
+            color: primary
+            show_entity_picture: false
+            vertical: true
+          - type: tile
+            color: green
+            vertical: true
+            name: Print Duration
+            entity: sensor.octoprint_start_time
+          - type: tile
+            color: purple
+            vertical: true
+            name: Endor ETA
+            entity: sensor.octoprint_estimated_finish_time
+  - title: Wookie
+    path: wookie
     badges: []
     cards:
-      - type: custom:mini-media-player
-        entity: media_player.raspiaudio_muse_luxe
-        artwork: full-cover
-        source: full
-        info: short
-        replace_mute: next
-        volume_stateless: false
-      - type: gauge
-        entity: sensor.wemos_d1_mini_smoke_sensor_2
-  - theme: Backend-selected
-    title: Kitchen
-    path: kitchen
+      - type: grid
+        cards:
+          - type: tile
+            entity: sensor.wookieklipper_current_print_state
+            name: Status
+            color: primary
+            show_entity_picture: false
+            vertical: true
+          - type: tile
+            entity: sensor.wookieklipper_print_duration
+            color: green
+            vertical: true
+            name: Print Duration
+          - type: tile
+            entity: sensor.wookieklipper_print_eta
+            color: purple
+            vertical: true
+            name: Wookie ETA
+      - type: custom:bar-card
+        entities:
+          - entity: sensor.wookieklipper_progress
+            name: Wookie Progress
+        title: Progress
+        color: green
+      - square: true
+        type: grid
+        cards:
+          - type: custom:button-card
+            entity: button.wookieklipper_pause_print
+            name: Pause
+            color_type: icon
+            tap_action:
+              action: toggle
+              name: Pause
+          - type: custom:button-card
+            entity: button.wookieklipper_resume_print
+            name: Resume
+            color_type: icon
+            tap_action:
+              action: toggle
+              name: Resume
+          - type: custom:button-card
+            entity: button.wookieklipper_cancel_print
+            name: Cancel
+            color_type: icon
+            tap_action:
+              action: toggle
+              name: Cancel
+              lock: null
+              enabled: false
+              confirmation: null
+              text: This will CANCEL the print. Are you sure?
+          - type: custom:button-card
+            entity: button.wookieklipper_emergency_stop
+            name: Emergency
+            color_type: icon
+            color: red
+            tap_action:
+              action: toggle
+              lock: null
+              enabled: false
+              confirmation: null
+              text: This will REBOOT the printer. Are you sure?
+        columns: 4
+  - title: Zigbee
+    path: zigbee
+    type: custom:masonry-layout
+    layout:
+      width: 700
+      max_cols: 1
     badges: []
     cards:
-      - type: gauge
-        entity: sensor.particulate_matter_2_5um_concentration
-
+      - type: custom:zigbee2mqtt-networkmap
+        entity: sensor.zigbee2mqtt_networkmap
