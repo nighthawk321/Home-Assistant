@@ -1,113 +1,25 @@
-homeassistant:
-  # Name of the location where Home Assistant is running
-  #name: Home
-  # Location required to calculate the time the sun rises and sets
-  latitude: 51.5840603
-  longitude: -2.0995923
-  # Impacts weather/sunrise data (altitude above sea level in meters)
-  #elevation: 0
-  # metric for Metric, imperial for Imperial
-  #unit_system: metric
-  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-  time_zone: Europe/London
-  # Customization file
-  customize: !include customize.yaml
-
-# Enables the frontend
-frontend:
-  # themes: !include themes.yaml
-  themes: !include_dir_merge_named themes
-
-# Enables configuration UI
-config:
-
-# Uncomment this if you are using SSL/TLS, running in Docker container, etc.
-# http:
-#   base_url: example.duckdns.org:8123
-
-# Checks for available updates
-# Note: This component will send some information about your system to
-# the developers to assist with development of Home Assistant.
-# For more information, please see:
-# https://home-assistant.io/blog/2016/10/25/explaining-the-updater/
-updater:
-  # Optional, allows Home Assistant developers to focus on popular components.
-  # include_used_components: true
-
-# Discover some devices automatically
-discovery:
-
-# Allows you to issue voice commands from the frontend in enabled browsers
-conversation:
-
-# Enables support for tracking state changes over time
-#history:
-
-# View all events in a logbook
-logbook:
-
-# Enables a map showing the location of tracked devices
-map:
-
-# Track the sun
-sun:
-
-recorder:
-
+# Loads default set of integrations. Do not remove.
 default_config:
 
-# Cloud
-cloud:
+# Load frontend themes from the themes folder
+frontend:
+  themes: !include_dir_merge_named themes
 
-person:
- 
+# Text to speech
 tts:
   - platform: google_translate
-  
-mobile_app:
 
-hacs:
-  token: 'my_token'
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
 
-# add all sensor here to stop duplicate errors
-sensor:
-  - platform: systemmonitor
-    resources:
-      - type: disk_use_percent
-        arg: /home
-      - type: memory_free
-  - platform: mqtt
-    name: Bridge state
-    state_topic: "zigbee2m"
+calendar:
+  - platform: caldav
+    username: Ashley
+    password: !secret caldav
+    url: https://mystuffismine.hopto.org/remote.php/dav
 
-  - platform: cpuspeed
-
- 
-
-mqtt:
-  broker: core-mosquitto # This will have to be your mqtt broker, Mosquitto addon is recommended.
-  discovery: true
-
-input_boolean:
-  zigbee_permit_join:
-    name: Allow devices to join
-    initial: off
-    icon: mdi:cellphone-wireless
-
-timer:
-  zigbee_permit_join:
-    name: Time remaining
-    duration: 600 # Updated this to the number of seconds you wish
-
-
-influxdb:
-  host: a0d7b954-influxdb
-  port: 8086
-  database: homeassistant
-  username: 'user name'
-  password: 'password'
-  max_retries: 3
-  default_measurement: state
+powercalc:
 
 amcrest:
   - host: http://192.168.1.70
@@ -119,25 +31,15 @@ amcrest:
       - online
     sensors:
       - sdcard
-
-
-
-# Example configuration.yaml entry for the Telegram Bot
-telegram_bot:
-  - platform: polling
-    api_key: 'my api_key'
-    allowed_chat_ids:
-      - 407997368
-
-# Example configuration.yaml entry for the notifier
-notify:
-  - platform: telegram
-    name: telegram
-    chat_id: 'somenumbers'
-
-
- 
-system_health:
-group: !include groups.yaml
-automation: !include automations.yaml
-script: !include scripts.yaml
+      
+      
+mqtt:
+  sensor:
+    - name: Zigbee2mqtt Networkmap
+      # if you change base_topic of Zigbee2mqtt, change state_topic accordingly
+      state_topic: zigbee2mqtt/bridge/response/networkmap
+      value_template: >-
+        {{ now().strftime('%Y-%m-%d %H:%M:%S') }}
+      # again, if you change base_topic of Zigbee2mqtt, change json_attributes_topic accordingly
+      json_attributes_topic: zigbee2mqtt/bridge/response/networkmap
+      json_attributes_template: "{{ value_json.data.value | tojson }}"
