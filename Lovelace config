@@ -87,6 +87,15 @@ views:
                 skip_condition: true
             entity: automation.open_the_curtain
             icon: mdi:curtains
+- type: entities
+        entities:
+          - sensor.humidity
+          - sensor.illuminance
+          - binary_sensor.mmwave
+          - binary_sensor.occupancy
+          - binary_sensor.pir
+          - sensor.temperature
+        title: my-room-presence
   - theme: Backend-selected
     title: Heating
     path: heating
@@ -185,15 +194,7 @@ views:
           - type: gauge
             entity: sensor.oneplus_a3003_battery_level
             name: My phone
-      - type: entities
-        entities:
-          - sensor.humidity
-          - sensor.illuminance
-          - binary_sensor.mmwave
-          - binary_sensor.occupancy
-          - binary_sensor.pir
-          - sensor.temperature
-        title: my-room-presence
+      
   - theme: Backend-selected
     title: Batteries
     path: batteries
@@ -443,6 +444,17 @@ views:
               confirmation: null
               text: This will REBOOT the printer. Are you sure?
         columns: 4
+           - type: custom:apexcharts-card
+             header:
+              show: true
+              title: Wookie Temperature
+              show_states: true
+              colorize_states: true
+            series:
+            - entity: sensor.wookieklipper_bed_temperature
+              type: line
+            - entity: sensor.wookieklipper_extruder_temperature
+              type: line 
   - title: Zigbee
     path: zigbee
     type: custom:masonry-layout
