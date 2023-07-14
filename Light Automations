@@ -34,3 +34,28 @@ action:
     entity_id: light.tz3000_dbou1ap4_ts0505a_7adddbfe_level_light_color_on_off
     domain: light
 mode: single
+
+
+##motion turn on ceiling light
+
+alias: motion for ceiling light
+description: ""
+trigger:
+  - type: motion
+    platform: device
+    device_id: 98a56190797167d1cd6f40d7d0cfaecc
+    entity_id: binary_sensor.bedroom_motion_occupancy
+    domain: binary_sensor
+condition:
+  - type: is_illuminance
+    condition: device
+    device_id: 98a56190797167d1cd6f40d7d0cfaecc
+    entity_id: sensor.bedroom_motion_illuminance_lux
+    domain: sensor
+    below: 6
+action:
+  - service: light.turn_on
+    data: {}
+    target:
+      device_id: 2ae81541a46325318a525029c812d77a
+mode: single
