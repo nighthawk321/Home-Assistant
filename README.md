@@ -2,11 +2,12 @@
 My current set up for my home assistant setup is based on an odroid 2n+ running HASSos and it seems to run a lot more smoothly
 Current Hardware-
 
-Echo dot 
+Echo dot - Binned and replaced with homeassistant voice control
+           M5 stack but seems to be unresponsive sometimes
 
 Zigbee2mqtt runnng via the docker and a sonodd zigbee dongle 3 (not updated as I haven't been able to
 current devices-
-Sonnoff zigbee bridge running tasmota with brdige firmware installed
+Sonoff zigbee bridge running tasmota with brdige firmware installed and coonected to HA via ZHA
 
 2 Aqara curtain driver E1
 
@@ -26,7 +27,7 @@ Ikea sonos speaker
 
 Raspberry 4B running Kodi/libreelec
 
-
+MOES   UFO-R11 zigbee or blaster
 
 
 
