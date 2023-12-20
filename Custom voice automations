@@ -1,0 +1,36 @@
+## for tuning up the tv via the ir blaster
+alias: Turn up the TV
+description: ""
+trigger:
+  - platform: conversation
+    command:
+      - turn up the tv
+condition: []
+action:
+  - service: mqtt.publish
+    data:
+      qos: 0
+      retain: false
+      topic: zigbee2mqtt/Ir_Blaster/set
+      payload: >-
+        {"ir_code_to_send":"B7cRtxE0Ap8G4AED4AsB4Dcf4AMB4ANLwAsHiLi3EbcRNALAD0AH4AsBQBfAA+ALAcAbQAfgFwFAI+AHA+B8hwIGNAI="}
+mode: single
+
+
+## for turning down the tv via the ir blaster
+alias: Turn down the TV
+description: ""
+trigger:
+  - platform: conversation
+    command:
+      - turn down the tv
+condition: []
+action:
+  - service: mqtt.publish
+    data:
+      qos: 0
+      retain: false
+      topic: zigbee2mqtt/Ir_Blaster/set
+      payload: >-
+        {"ir_code_to_send":"B7gRuBE1Ap0G4AED4AsB4B8fQAFAK+APAcAbQAfgAwMHhri4EbgRNQLgAxPgCwHgHx9AAUAr4A8BwBtAB+ADA+B8hwIGNQI="}
+mode: single
