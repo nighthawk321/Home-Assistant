@@ -27,6 +27,9 @@ views:
           - calendar.recycle_bins
           - calendar.bin
           - calendar.personal
+      - type: todo-list
+        entity: todo.to_do
+        title: ToDO
   - theme: Backend-selected
     title: Camera
     path: camera
@@ -34,10 +37,20 @@ views:
     cards:
       - show_state: true
         show_name: true
-        camera_view: auto
+        camera_view: live
         type: picture-entity
         image: https://demo.home-assistant.io/stub_config/bedroom.png
-        entity: camera.front_camera
+        camera_image: camera.amcrest_mediaprofile_channel1_mainstream
+        entity: camera.amcrest_mediaprofile_channel1_mainstream
+        name: Front Camera
+      - show_state: true
+        show_name: true
+        camera_view: live
+        type: picture-entity
+        image: https://demo.home-assistant.io/stub_config/bedroom.png
+        camera_image: camera.back_garden_mediaprofile_channel1_mainstream
+        entity: camera.back_garden_mediaprofile_channel1_mainstream
+        name: Back Garden
   - theme: Backend-selected
     title: My Room
     path: my-room
@@ -87,22 +100,33 @@ views:
                 skip_condition: true
             entity: automation.open_the_curtain
             icon: mdi:curtains
-- type: entities
+      - type: entities
         entities:
-          - sensor.humidity
-          - sensor.illuminance
-          - binary_sensor.mmwave
-          - binary_sensor.occupancy
-          - binary_sensor.pir
-          - sensor.temperature
-        title: my-room-presence
+          - entity: sensor.my_room_presence_humidity
+            name: Humidity
+          - entity: sensor.my_room_presence_illuminance
+            name: Illuminance
+          - entity: binary_sensor.my_room_presence_mmwave
+            name: MmWave
+          - entity: binary_sensor.my_room_presence_occupancy
+            name: Occupancy
+          - entity: binary_sensor.my_room_presence_pir
+            name: PIR
+          - entity: sensor.my_room_presence_temperature
+            name: Temperature
+        title: My Room Presence
   - theme: Backend-selected
     title: Heating
     path: heating
     badges: []
     cards:
-      - type: custom:better-thermostat-ui-card
+      - type: thermostat
         entity: climate.shellytrv_8cf6811870df
+        features:
+          - type: climate-hvac-modes
+            hvac_modes:
+              - 'off'
+              - heat
         name: My Heater
       - type: custom:mini-graph-card
         entities:
@@ -115,16 +139,7 @@ views:
         font_size: 75
       - type: custom:mini-graph-card
         entities:
-          - sensor.landing_atcpvvx_temperature
-        name: Landing
-        hours_to_show: 20
-        points_per_hour: 1
-        line_color: red
-        line_width: 6
-        font_size: 75
-      - type: custom:mini-graph-card
-        entities:
-          - sensor.mybedroom_atcpvvx_temperature
+          - sensor.my_room_presence_temperature
         name: My Room
         hours_to_show: 20
         points_per_hour: 1
@@ -177,6 +192,13 @@ views:
             icon: mdi:key
             entity: binary_sensor.front_door_contact
             name: Front Door
+      - type: alarm-panel
+        states:
+          - arm_home
+          - arm_away
+          - arm_night
+        entity: alarm_control_panel.alarmo
+        name: Alarm
   - theme: Backend-selected
     title: new
     path: new
@@ -189,12 +211,14 @@ views:
       - type: vertical-stack
         cards:
           - type: custom:mushroom-person-card
-            entity: device_tracker.oneplus_tech_shenzhen_e4_da_52
             name: Ashley
+            entity: device_tracker.oneplus_tech_shenzhen_e4_da_52
           - type: gauge
             entity: sensor.oneplus_a3003_battery_level
             name: My phone
-      
+      - type: shopping-list
+        title: Shopping List
+        entity: todo.shopping_list
   - theme: Backend-selected
     title: Batteries
     path: batteries
@@ -261,6 +285,7 @@ views:
             color: yellow
         entities:
           - sensor.lumi_lumi_sensor_magnet_aq2_battery_2
+          - sensor.lumi_lumi_sensor_magnet_aq2_battery_3
       - type: custom:battery-state-card
         title: Themometer
         color_thresholds:
@@ -272,24 +297,47 @@ views:
           - sensor.landing_atcpvvx_battery
           - sensor.mybedroom_atcpvvx_battery
           - sensor.sittingroom_atcpvvx_battery
+          - sensor.bedroom_temp_battery
+      - type: custom:battery-state-card
+        title: Fridge and Freezer
+        color_thresholds:
+          - value: 20
+            color: red
+          - value: 60
+            color: yellow
+        entities:
+          - sensor.freezer_battery
+          - sensor.garage_fridge_battery
+          - sensor.kitchen_fridge_battery
+      - type: custom:battery-state-card
+        title: Vibration sensor
+        color_thresholds:
+          - value: 20
+            color: red
+          - value: 60
+            color: yellow
+        entities:
+          - sensor.bedroom_vibration_battery
   - theme: Backend-selected
     title: Audio
     path: audio
     badges: []
     cards:
       - type: custom:mini-media-player
-        entity: media_player.raspi_audio_muse_luxe
+        entity: media_player.raspiaudio_muse_luxe_38215c_home_audio
         artwork: full-cover
         source: full
         info: short
         replace_mute: play_stop
         toggle_power: false
-        name: raspi audio
+        name: Home audio
       - type: entities
         entities:
           - entity: switch.tv_2
         title: TV
         state_color: true
+      - type: media-control
+        entity: media_player.libreelec
       - type: custom:sonos-card
   - theme: Backend-selected
     title: Air Quality
@@ -307,61 +355,26 @@ views:
           red: 80
         name: Garage Smike Detector
       - type: gauge
-        entity: sensor.particulate_matter_2_5um_concentration_2
-        name: Kitchen Air
-        min: 0
-        max: 100
+        entity: sensor.particulate_matter_2_5um_concentration_3
         needle: true
         severity:
           green: 0
           yellow: 50
-          red: 80
+          red: 75
   - title: Endor
     path: endor
     badges: []
     cards:
-      - type: entities
-        entities:
-          - entity: button.octoprint_pause_job
-            name: Pause Job
-          - entity: button.octoprint_resume_job
-            name: Resume Job
-          - entity: button.octoprint_stop_job
-            name: Stop Job
-        title: OctoPrint
-      - type: grid
-        square: false
-        columns: 1
-        cards:
-          - type: entities
-            entities:
-              - entity: sensor.octoprint_actual_bed_temp
-                name: Actual bed temp
-              - entity: sensor.octoprint_actual_tool0_temp
-                name: Actual tool0 temp
-              - entity: sensor.octoprint_actual_w_temp
-                name: Actual W temp
-              - entity: binary_sensor.octoprint_printing_error
-                name: Printing Error
-              - entity: sensor.octoprint_start_time
-                name: Start Time
-              - entity: sensor.octoprint_target_bed_temp
-                name: Target bed temp
-              - entity: sensor.octoprint_target_tool0_temp
-                name: Target tool0 temp
-              - entity: sensor.octoprint_target_w_temp
-                name: Target W temp
-            title: OctoPrint
       - type: custom:bar-card
         entities:
-          - entity: sensor.octoprint_job_percentage
+          - entity: sensor.endor_progress
             name: Endor Progress
         color: blue
         title: Endors Progress
       - type: grid
         cards:
           - type: tile
-            entity: sensor.octoprint_current_state
+            entity: sensor.endor_current_print_state
             name: Status
             color: primary
             show_entity_picture: false
@@ -370,12 +383,54 @@ views:
             color: green
             vertical: true
             name: Print Duration
-            entity: sensor.octoprint_start_time
+            entity: sensor.endor_print_duration
           - type: tile
             color: purple
             vertical: true
             name: Endor ETA
-            entity: sensor.octoprint_estimated_finish_time
+            entity: sensor.endor_print_eta
+      - square: true
+        type: grid
+        cards:
+          - type: custom:button-card
+            entity: button.endor_pause_print
+            name: Pause
+            color_type: icon
+            tap_action:
+              action: toggle
+              name: Pause
+          - type: custom:button-card
+            entity: button.endor_resume_print
+            name: Resume
+            color_type: icon
+            tap_action:
+              action: toggle
+              name: Resume
+          - type: custom:button-card
+            entity: button.endor_emergency_stop
+            name: Stop
+            color_type: icon
+            tap_action:
+              action: toggle
+              name: Stop
+              lock: null
+              enabled: false
+              confirmation: null
+              text: This will STOP the print. Are you sure?
+        columns: 3
+      - type: custom:apexcharts-card
+        graph_span: 6hours
+        header:
+          show: true
+          title: Endor Temperature
+          show_states: true
+          colorize_states: true
+        series:
+          - entity: sensor.endor_bed_temperature
+            type: line
+          - entity: sensor.endor_extruder_temperature
+            type: line
+            color: green
   - title: Wookie
     path: wookie
     badges: []
@@ -394,10 +449,10 @@ views:
             vertical: true
             name: Print Duration
           - type: tile
-            entity: sensor.wookieklipper_print_eta
             color: purple
             vertical: true
             name: Wookie ETA
+            entity: sensor.wookieklipper_print_eta
       - type: custom:bar-card
         entities:
           - entity: sensor.wookieklipper_progress
@@ -444,24 +499,103 @@ views:
               confirmation: null
               text: This will REBOOT the printer. Are you sure?
         columns: 4
-           - type: custom:apexcharts-card
-             header:
-              show: true
-              title: Wookie Temperature
-              show_states: true
-              colorize_states: true
-            series:
-            - entity: sensor.wookieklipper_bed_temperature
-              type: line
-            - entity: sensor.wookieklipper_extruder_temperature
-              type: line 
-  - title: Zigbee
-    path: zigbee
-    type: custom:masonry-layout
-    layout:
-      width: 700
-      max_cols: 1
+      - type: custom:apexcharts-card
+        graph_span: 6hours
+        header:
+          show: true
+          title: Wookie Temperature
+          show_states: true
+          colorize_states: true
+        series:
+          - entity: sensor.wookieklipper_bed_temperature
+            type: line
+          - entity: sensor.wookieklipper_extruder_temperature
+            type: line
+            color: red
+  - title: Food
+    path: food
     badges: []
     cards:
-      - type: custom:zigbee2mqtt-networkmap
-        entity: sensor.zigbee2mqtt_networkmap
+      - type: custom:apexcharts-card
+        header:
+          show: true
+          title: Kitchen Fridge
+          show_states: true
+          colorize_states: true
+        series:
+          - entity: sensor.kitchen_fridge
+            data_generator: ''
+          - entity: sensor.kitchen_fridge_humidity
+            type: column
+            data_generator: ''
+      - type: custom:apexcharts-card
+        header:
+          show: true
+          title: Garage Fridge Fridge
+          show_states: true
+          colorize_states: true
+        series:
+          - entity: sensor.garage_fridge
+            data_generator: ''
+          - entity: sensor.garage_fridge_humidity
+            type: column
+            data_generator: ''
+      - type: custom:apexcharts-card
+        header:
+          show: true
+          title: Freezer
+          show_states: true
+          colorize_states: true
+        series:
+          - entity: sensor.freezer
+            data_generator: ''
+          - entity: sensor.freezer_humidity
+            type: column
+            data_generator: ''
+  - title: Bathroom
+    path: bathroom
+    badges: []
+    cards:
+      - type: custom:apexcharts-card
+        header:
+          show: true
+          title: Toothbrush Battery
+          show_states: true
+          colorize_states: true
+        series:
+          - entity: sensor.io_series_4_026a_battery
+            type: line
+            color: yellow
+      - type: entities
+        entities:
+          - entity: sensor.io_series_4_026a_signal_strength
+          - entity: sensor.io_series_4_026a
+          - entity: sensor.io_series_4_026a_number_of_sectors
+          - entity: sensor.io_series_4_026a_brushing_mode
+          - entity: sensor.io_series_4_026a_sector
+        title: My Tooth Brush
+      - type: entities
+        entities:
+          - entity: binary_sensor.lumi_lumi_sensor_wleak_aq1_moisture_2
+            name: Moisture
+        title: Main Bog
+      - type: entities
+        entities:
+          - entity: binary_sensor.lumi_lumi_sensor_wleak_aq1_moisture
+            name: Moisture
+        title: Bog Sink
+  - title: Car
+    path: car
+    icon: ''
+    badges: []
+    cards:
+      - type: entities
+        entities:
+          - entity: sensor.dvla_hv60_mvx_motexpirydate
+          - entity: sensor.dvla_hv60_mvx_motstatus
+          - entity: binary_sensor.dvla_hv60_mvx_motstatus
+          - entity: sensor.dvla_hv60_mvx_registrationnumber
+          - entity: sensor.dvla_hv60_mvx_taxduedate
+          - entity: sensor.dvla_hv60_mvx_taxstatus
+          - entity: binary_sensor.dvla_hv60_mvx_taxstatus
+        title: HV60 MVX
